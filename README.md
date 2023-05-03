@@ -1,6 +1,6 @@
 # DSML_Team01
 The A Team's Repository
 
-Salam Alaykum
+Al-Salam Alaykum
 test
 Wa alaykum assalam
