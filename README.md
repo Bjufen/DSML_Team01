@@ -10,7 +10,7 @@ Wa alaykum assalam
 
 ### Clone repository 
 
-1.Öffne Ordner wo du es speichern möchest
+1. Öffne Ordner wo du es speichern möchest
 2. öffne cmd (Trick(Bei Windows): cmd in Suchleiste eingeben um es direkt im richtigem Verzeichnis zu öffnen)
 
 ![grafik](https://user-images.githubusercontent.com/21199937/236054382-fac54d4a-a0ac-4b2a-a4e6-ba6be8b3ee91.png)
