@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/DSML_Team01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DSML_Team01.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +62,7 @@
     "git-widget-placeholder": "Yusuf",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/yusuf/DSML/NullRows",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">

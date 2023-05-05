@@ -15,24 +15,32 @@ Wa alaykum assalam
 
 ![grafik](https://user-images.githubusercontent.com/21199937/236054382-fac54d4a-a0ac-4b2a-a4e6-ba6be8b3ee91.png)
 
-3. in Kommandozeile eingeben: git clone URL
+3. in Kommandozeile eingeben `git clone https://github.com/Bjufen/DSML_Team01.git`
 
 ### Create new Branch for you to work on
 
-1. In Kommandozeile: git checkout -b BRANCHNAME
+1. In Kommandozeile `git checkout -b BRANCHNAME`
 
 Jetzt kannst du jede Scheiß da machen und du änderst nichts im Hauptrepository
 
 ### Commit and push changes
 
-1. In Kommandozeile: git add .
-2. In Kommandozeile: git commit -m "COMMIT MESSAGE"
-3. In Kommandozeile: git push -u origin BRANCHNAME
+1. In Kommandozeile `git add .`
+2. In Kommandozeile `git commit -m "COMMIT MESSAGE"`
+3. In Kommandozeile `git push -u origin BRANCHNAME`
 
 ### Merge Branches
 
-1. In Kommandozeile: git checkout main
-2. In Kommandozeile: git merge BRANCHNAME
-3. In Kommandozeile: git push
+1. In Kommandozeile `git checkout main`
+2. In Kommandozeile `git merge BRANCHNAME`
+3. In Kommandozeile `git push`
 
 (Wird vllt Faxxen machen wegen Pull requests und so)
+
+### Tips
+
+Wenn du Dateien Privat speichern aber nicht in Git hochladen möchtest kannst du einfach den Pfad im .gitignore hinzufügen
+> #### Pfad
+> "Yusuf_Playground/CSV/"
+> #### Datei
+> "Yusuf_Playground/CSV/metro_2017_2022.csv"
