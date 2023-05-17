@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="Hello">
-      <change afterPath="$PROJECT_DIR$/Yusuf_Playground/.ipynb_checkpoints/Yusuf_Playground-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +42,7 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="Yusuf" />
-                    <option name="lastUsedInstant" value="1683291674" />
+                    <option name="lastUsedInstant" value="1684338879" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
