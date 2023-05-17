@@ -2,10 +2,9 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/Yusuf_Playground/CSV" />
+      <excludeFolder url="file://$MODULE_DIR$/outCSV" />
     </content>
-    <orderEntry type="jdk" jdkName="DSML_Team01" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Data_Cleanup" />
   </component>
 </module>

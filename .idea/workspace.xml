@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="Hello">
-      <change beforePath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/inCSV/Weather_LosAngeles.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data_Cleanup/inCSV/metro_2017_2022.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DSML_Team01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DSML_Team01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +42,7 @@
   }
 }</component>
   <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
     <option name="recentBranches">
       <RecentBranches>
         <option name="branchesForRepo">
@@ -81,11 +91,12 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Yusuf&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/DSML/NullRows&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/DataspellProjects/DSML_Team01/Data_Cleanup&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
