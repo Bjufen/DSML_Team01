@@ -40,7 +40,7 @@ Jetzt kannst du jede Scheiß da machen und du änderst nichts im Hauptrepository
 ### Tips
 
 Wenn du Dateien Privat speichern aber nicht in Git hochladen möchtest kannst du einfach den Pfad im .gitignore hinzufügen
-> #### Pfad
+> #### Ordner
 > "Yusuf_Playground/CSV/"
 > #### Datei
 > "Yusuf_Playground/CSV/metro_2017_2022.csv"
