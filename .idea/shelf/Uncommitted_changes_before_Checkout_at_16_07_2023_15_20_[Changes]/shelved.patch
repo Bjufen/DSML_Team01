@@ -1,0 +1,1240 @@
+Index: Yusuf_Playground/Yusuf_Playground.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n \"cells\": [\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": null,\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"import pandas as pd\\n\",\r\n    \"metro_set = pd.read_csv(\\\"../Data_Cleanup/outCSV/Metro.csv\\\", )\"\r\n   ],\r\n   \"metadata\": {\r\n    \"collapsed\": false\r\n   }\r\n  }\r\n ],\r\n \"metadata\": {\r\n  \"kernelspec\": {\r\n   \"display_name\": \"Python 3\",\r\n   \"language\": \"python\",\r\n   \"name\": \"python3\"\r\n  },\r\n  \"language_info\": {\r\n   \"codemirror_mode\": {\r\n    \"name\": \"ipython\",\r\n    \"version\": 2\r\n   },\r\n   \"file_extension\": \".py\",\r\n   \"mimetype\": \"text/x-python\",\r\n   \"name\": \"python\",\r\n   \"nbconvert_exporter\": \"python\",\r\n   \"pygments_lexer\": \"ipython2\",\r\n   \"version\": \"2.7.6\"\r\n  }\r\n },\r\n \"nbformat\": 4,\r\n \"nbformat_minor\": 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Yusuf_Playground/Yusuf_Playground.ipynb b/Yusuf_Playground/Yusuf_Playground.ipynb
+--- a/Yusuf_Playground/Yusuf_Playground.ipynb	
++++ b/Yusuf_Playground/Yusuf_Playground.ipynb	
+@@ -1,12 +1,607 @@
+ {
+  "cells": [
+   {
++   "cell_type": "code",
++   "execution_count": 20,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\976572699.py:1: FutureWarning: ['city', 'timestamp'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  weather_groups_agg = clean_weather_set.groupby(\"cloud_cover_description\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "                        temperature              cloud_cover               \\\n                               mean   max  count        mean   max  count   \ncloud_cover_description                                                     \nBlowing Dust              17.400000  21.0     10   19.000000  19.0     10   \nBlowing Dust / Windy      14.777778  16.0     18   19.000000  19.0     18   \nCloudy                    15.534459  39.0  11782   26.000000  26.0  11782   \nCloudy / Windy            15.818182  25.0     11   26.000000  26.0     11   \nFair                      19.924586  54.0  47140   33.540878  34.0  47140   \nFair / Windy              18.342723  30.0    213   33.596244  34.0    213   \nFog                       12.114929  19.0    844   20.000000  20.0    844   \nHaze                      17.418913  37.0   2337   21.000000  21.0   2337   \nHaze / Windy              19.000000  19.0      2   21.000000  21.0      2   \nHeavy Rain                11.275556  21.0    225   40.000000  40.0    225   \nHeavy Rain / Windy        12.000000  16.0     17   40.000000  40.0     17   \nHeavy T-Storm             12.200000  13.0      5    4.000000   4.0      5   \nLight Rain                12.790972  41.0   2038   11.000000  11.0   2038   \nLight Rain / Windy        12.625000  16.0     24   11.000000  11.0     24   \nLight Rain with Thunder   21.000000  26.0      6    4.000000   4.0      6   \nMostly Cloudy             16.027015  39.0   4664   27.476415  28.0   4664   \nMostly Cloudy / Windy     17.000000  25.0     14   27.285714  28.0     14   \nPartly Cloudy             17.438710  42.0   6355   29.483871  30.0   6355   \nPartly Cloudy / Windy     19.000000  37.0     25   29.480000  30.0     25   \nRain                      11.794000  31.0    500   12.000000  12.0    500   \nRain / Windy              11.466667  14.0     15   12.000000  12.0     15   \nSmoke                     23.086811  38.0    599   22.000000  22.0    599   \nSmoke / Windy             17.666667  24.0     21   22.000000  22.0     21   \nT-Storm                   16.035714  37.0     28    4.000000   4.0     28   \nThunder                   22.875000  31.0      8   38.000000  38.0      8   \nThunder in the Vicinity   22.605263  42.0     38   39.894737  47.0     38   \nWidespread Dust           35.000000  38.0      7   19.000000  19.0      7   \n\n                           pressure                  windspeed               \\\n                               mean      max  count       mean   max  count   \ncloud_cover_description                                                       \nBlowing Dust             984.405000   988.13     10  20.600000  31.0     10   \nBlowing Dust / Windy     987.393889   989.77     18  44.833333  65.0     18   \nCloudy                   986.377744   998.99  11782   8.212952  31.0  11782   \nCloudy / Windy           982.557273   986.48     11  40.181818  48.0     11   \nFair                     987.042441  1002.94  47140   8.273271  31.0  47140   \nFair / Windy             987.012113  1002.28    213  37.741784  65.0    213   \nFog                      988.681303   997.02    844   4.944313  22.0    844   \nHaze                     987.029688   994.71   2337   6.736842  30.0   2337   \nHaze / Windy             975.445000   975.61      2  39.000000  43.0      2   \nHeavy Rain               983.480356   992.41    225  16.195556  31.0    225   \nHeavy Rain / Windy       979.427059   985.82     17  39.823529  46.0     17   \nHeavy T-Storm            985.558000   986.81      5  17.000000  30.0      5   \nLight Rain               985.959632   999.65   2038  12.351816  31.0   2038   \nLight Rain / Windy       979.701250   987.14     24  36.333333  48.0     24   \nLight Rain with Thunder  986.258333   988.78      6  10.500000  24.0      6   \nMostly Cloudy            986.632575   997.67   4664   8.016081  31.0   4664   \nMostly Cloudy / Windy    982.292143   987.47     14  40.500000  57.0     14   \nPartly Cloudy            987.138357   999.32   6355   7.972935  31.0   6355   \nPartly Cloudy / Windy    984.146800  1001.62     25  36.360000  44.0     25   \nRain                     984.429700   993.72    500  14.490000  31.0    500   \nRain / Windy             980.860667   989.11     15  36.866667  48.0     15   \nSmoke                    987.368247   999.98    599   7.001669  31.0    599   \nSmoke / Windy            991.920476   996.69     21  43.523810  57.0     21   \nT-Storm                  984.009643   990.10     28  13.392857  24.0     28   \nThunder                  987.217500   990.10      8  11.000000  20.0      8   \nThunder in the Vicinity  984.010000   990.10     38  13.657895  28.0     38   \nWidespread Dust          989.062857   989.77      7  14.000000  31.0      7   \n\n                        precipitation               felt_temperature        \\\n                                 mean    max  count             mean   max   \ncloud_cover_description                                                      \nBlowing Dust                 0.000000   0.00     10        17.400000  21.0   \nBlowing Dust / Windy         0.000000   0.00     18        14.777778  16.0   \nCloudy                       0.018791   9.91  11782        15.511628  37.0   \nCloudy / Windy               0.000000   0.00     11        15.727273  24.0   \nFair                         0.000075   0.76  47140        19.719516  44.0   \nFair / Windy                 0.000000   0.00    213        18.061033  29.0   \nFog                          0.006552   1.27    844        12.035545  19.0   \nHaze                         0.001840   1.52   2337        17.405220  37.0   \nHaze / Windy                 0.000000   0.00      2        19.000000  19.0   \nHeavy Rain                   3.335956  13.97    225        10.684444  21.0   \nHeavy Rain / Windy           4.841176  11.18     17        11.823529  16.0   \nHeavy T-Storm                2.286000   4.06      5        12.200000  13.0   \nLight Rain                   0.613886  18.54   2038        12.624141  39.0   \nLight Rain / Windy           0.740000   3.30     24        12.625000  16.0   \nLight Rain with Thunder      0.380000   1.78      6        21.166667  27.0   \nMostly Cloudy                0.007063   4.06   4664        15.984777  37.0   \nMostly Cloudy / Windy        0.000000   0.00     14        16.928571  24.0   \nPartly Cloudy                0.001032   1.27   6355        17.317231  40.0   \nPartly Cloudy / Windy        0.000000   0.00     25        18.800000  36.0   \nRain                         1.975500  14.99    500        11.450000  31.0   \nRain / Windy                 2.286000   7.11     15        11.000000  14.0   \nSmoke                        0.001269   0.76    599        22.639399  38.0   \nSmoke / Windy                0.000000   0.00     21        17.666667  24.0   \nT-Storm                      1.196786   6.10     28        15.714286  37.0   \nThunder                      0.063750   0.51      8        22.875000  31.0   \nThunder in the Vicinity      0.033421   0.51     38        22.473684  43.0   \nWidespread Dust              0.000000   0.00      7        32.285714  35.0   \n\n                                \n                         count  \ncloud_cover_description         \nBlowing Dust                10  \nBlowing Dust / Windy        18  \nCloudy                   11782  \nCloudy / Windy              11  \nFair                     47140  \nFair / Windy               213  \nFog                        844  \nHaze                      2337  \nHaze / Windy                 2  \nHeavy Rain                 225  \nHeavy Rain / Windy          17  \nHeavy T-Storm                5  \nLight Rain                2038  \nLight Rain / Windy          24  \nLight Rain with Thunder      6  \nMostly Cloudy             4664  \nMostly Cloudy / Windy       14  \nPartly Cloudy             6355  \nPartly Cloudy / Windy       25  \nRain                       500  \nRain / Windy                15  \nSmoke                      599  \nSmoke / Windy               21  \nT-Storm                     28  \nThunder                      8  \nThunder in the Vicinity     38  \nWidespread Dust              7  ",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">temperature</th>\n      <th colspan=\"3\" halign=\"left\">cloud_cover</th>\n      <th colspan=\"3\" halign=\"left\">pressure</th>\n      <th colspan=\"3\" halign=\"left\">windspeed</th>\n      <th colspan=\"3\" halign=\"left\">precipitation</th>\n      <th colspan=\"3\" halign=\"left\">felt_temperature</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>cloud_cover_description</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Blowing Dust</th>\n      <td>17.400000</td>\n      <td>21.0</td>\n      <td>10</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>10</td>\n      <td>984.405000</td>\n      <td>988.13</td>\n      <td>10</td>\n      <td>20.600000</td>\n      <td>31.0</td>\n      <td>10</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>10</td>\n      <td>17.400000</td>\n      <td>21.0</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <th>Blowing Dust / Windy</th>\n      <td>14.777778</td>\n      <td>16.0</td>\n      <td>18</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>18</td>\n      <td>987.393889</td>\n      <td>989.77</td>\n      <td>18</td>\n      <td>44.833333</td>\n      <td>65.0</td>\n      <td>18</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>18</td>\n      <td>14.777778</td>\n      <td>16.0</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <th>Cloudy</th>\n      <td>15.534459</td>\n      <td>39.0</td>\n      <td>11782</td>\n      <td>26.000000</td>\n      <td>26.0</td>\n      <td>11782</td>\n      <td>986.377744</td>\n      <td>998.99</td>\n      <td>11782</td>\n      <td>8.212952</td>\n      <td>31.0</td>\n      <td>11782</td>\n      <td>0.018791</td>\n      <td>9.91</td>\n      <td>11782</td>\n      <td>15.511628</td>\n      <td>37.0</td>\n      <td>11782</td>\n    </tr>\n    <tr>\n      <th>Cloudy / Windy</th>\n      <td>15.818182</td>\n      <td>25.0</td>\n      <td>11</td>\n      <td>26.000000</td>\n      <td>26.0</td>\n      <td>11</td>\n      <td>982.557273</td>\n      <td>986.48</td>\n      <td>11</td>\n      <td>40.181818</td>\n      <td>48.0</td>\n      <td>11</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>11</td>\n      <td>15.727273</td>\n      <td>24.0</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <th>Fair</th>\n      <td>19.924586</td>\n      <td>54.0</td>\n      <td>47140</td>\n      <td>33.540878</td>\n      <td>34.0</td>\n      <td>47140</td>\n      <td>987.042441</td>\n      <td>1002.94</td>\n      <td>47140</td>\n      <td>8.273271</td>\n      <td>31.0</td>\n      <td>47140</td>\n      <td>0.000075</td>\n      <td>0.76</td>\n      <td>47140</td>\n      <td>19.719516</td>\n      <td>44.0</td>\n      <td>47140</td>\n    </tr>\n    <tr>\n      <th>Fair / Windy</th>\n      <td>18.342723</td>\n      <td>30.0</td>\n      <td>213</td>\n      <td>33.596244</td>\n      <td>34.0</td>\n      <td>213</td>\n      <td>987.012113</td>\n      <td>1002.28</td>\n      <td>213</td>\n      <td>37.741784</td>\n      <td>65.0</td>\n      <td>213</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>213</td>\n      <td>18.061033</td>\n      <td>29.0</td>\n      <td>213</td>\n    </tr>\n    <tr>\n      <th>Fog</th>\n      <td>12.114929</td>\n      <td>19.0</td>\n      <td>844</td>\n      <td>20.000000</td>\n      <td>20.0</td>\n      <td>844</td>\n      <td>988.681303</td>\n      <td>997.02</td>\n      <td>844</td>\n      <td>4.944313</td>\n      <td>22.0</td>\n      <td>844</td>\n      <td>0.006552</td>\n      <td>1.27</td>\n      <td>844</td>\n      <td>12.035545</td>\n      <td>19.0</td>\n      <td>844</td>\n    </tr>\n    <tr>\n      <th>Haze</th>\n      <td>17.418913</td>\n      <td>37.0</td>\n      <td>2337</td>\n      <td>21.000000</td>\n      <td>21.0</td>\n      <td>2337</td>\n      <td>987.029688</td>\n      <td>994.71</td>\n      <td>2337</td>\n      <td>6.736842</td>\n      <td>30.0</td>\n      <td>2337</td>\n      <td>0.001840</td>\n      <td>1.52</td>\n      <td>2337</td>\n      <td>17.405220</td>\n      <td>37.0</td>\n      <td>2337</td>\n    </tr>\n    <tr>\n      <th>Haze / Windy</th>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>2</td>\n      <td>21.000000</td>\n      <td>21.0</td>\n      <td>2</td>\n      <td>975.445000</td>\n      <td>975.61</td>\n      <td>2</td>\n      <td>39.000000</td>\n      <td>43.0</td>\n      <td>2</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>2</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <th>Heavy Rain</th>\n      <td>11.275556</td>\n      <td>21.0</td>\n      <td>225</td>\n      <td>40.000000</td>\n      <td>40.0</td>\n      <td>225</td>\n      <td>983.480356</td>\n      <td>992.41</td>\n      <td>225</td>\n      <td>16.195556</td>\n      <td>31.0</td>\n      <td>225</td>\n      <td>3.335956</td>\n      <td>13.97</td>\n      <td>225</td>\n      <td>10.684444</td>\n      <td>21.0</td>\n      <td>225</td>\n    </tr>\n    <tr>\n      <th>Heavy Rain / Windy</th>\n      <td>12.000000</td>\n      <td>16.0</td>\n      <td>17</td>\n      <td>40.000000</td>\n      <td>40.0</td>\n      <td>17</td>\n      <td>979.427059</td>\n      <td>985.82</td>\n      <td>17</td>\n      <td>39.823529</td>\n      <td>46.0</td>\n      <td>17</td>\n      <td>4.841176</td>\n      <td>11.18</td>\n      <td>17</td>\n      <td>11.823529</td>\n      <td>16.0</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <th>Heavy T-Storm</th>\n      <td>12.200000</td>\n      <td>13.0</td>\n      <td>5</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>5</td>\n      <td>985.558000</td>\n      <td>986.81</td>\n      <td>5</td>\n      <td>17.000000</td>\n      <td>30.0</td>\n      <td>5</td>\n      <td>2.286000</td>\n      <td>4.06</td>\n      <td>5</td>\n      <td>12.200000</td>\n      <td>13.0</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <th>Light Rain</th>\n      <td>12.790972</td>\n      <td>41.0</td>\n      <td>2038</td>\n      <td>11.000000</td>\n      <td>11.0</td>\n      <td>2038</td>\n      <td>985.959632</td>\n      <td>999.65</td>\n      <td>2038</td>\n      <td>12.351816</td>\n      <td>31.0</td>\n      <td>2038</td>\n      <td>0.613886</td>\n      <td>18.54</td>\n      <td>2038</td>\n      <td>12.624141</td>\n      <td>39.0</td>\n      <td>2038</td>\n    </tr>\n    <tr>\n      <th>Light Rain / Windy</th>\n      <td>12.625000</td>\n      <td>16.0</td>\n      <td>24</td>\n      <td>11.000000</td>\n      <td>11.0</td>\n      <td>24</td>\n      <td>979.701250</td>\n      <td>987.14</td>\n      <td>24</td>\n      <td>36.333333</td>\n      <td>48.0</td>\n      <td>24</td>\n      <td>0.740000</td>\n      <td>3.30</td>\n      <td>24</td>\n      <td>12.625000</td>\n      <td>16.0</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <th>Light Rain with Thunder</th>\n      <td>21.000000</td>\n      <td>26.0</td>\n      <td>6</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>6</td>\n      <td>986.258333</td>\n      <td>988.78</td>\n      <td>6</td>\n      <td>10.500000</td>\n      <td>24.0</td>\n      <td>6</td>\n      <td>0.380000</td>\n      <td>1.78</td>\n      <td>6</td>\n      <td>21.166667</td>\n      <td>27.0</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <th>Mostly Cloudy</th>\n      <td>16.027015</td>\n      <td>39.0</td>\n      <td>4664</td>\n      <td>27.476415</td>\n      <td>28.0</td>\n      <td>4664</td>\n      <td>986.632575</td>\n      <td>997.67</td>\n      <td>4664</td>\n      <td>8.016081</td>\n      <td>31.0</td>\n      <td>4664</td>\n      <td>0.007063</td>\n      <td>4.06</td>\n      <td>4664</td>\n      <td>15.984777</td>\n      <td>37.0</td>\n      <td>4664</td>\n    </tr>\n    <tr>\n      <th>Mostly Cloudy / Windy</th>\n      <td>17.000000</td>\n      <td>25.0</td>\n      <td>14</td>\n      <td>27.285714</td>\n      <td>28.0</td>\n      <td>14</td>\n      <td>982.292143</td>\n      <td>987.47</td>\n      <td>14</td>\n      <td>40.500000</td>\n      <td>57.0</td>\n      <td>14</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>14</td>\n      <td>16.928571</td>\n      <td>24.0</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <th>Partly Cloudy</th>\n      <td>17.438710</td>\n      <td>42.0</td>\n      <td>6355</td>\n      <td>29.483871</td>\n      <td>30.0</td>\n      <td>6355</td>\n      <td>987.138357</td>\n      <td>999.32</td>\n      <td>6355</td>\n      <td>7.972935</td>\n      <td>31.0</td>\n      <td>6355</td>\n      <td>0.001032</td>\n      <td>1.27</td>\n      <td>6355</td>\n      <td>17.317231</td>\n      <td>40.0</td>\n      <td>6355</td>\n    </tr>\n    <tr>\n      <th>Partly Cloudy / Windy</th>\n      <td>19.000000</td>\n      <td>37.0</td>\n      <td>25</td>\n      <td>29.480000</td>\n      <td>30.0</td>\n      <td>25</td>\n      <td>984.146800</td>\n      <td>1001.62</td>\n      <td>25</td>\n      <td>36.360000</td>\n      <td>44.0</td>\n      <td>25</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>25</td>\n      <td>18.800000</td>\n      <td>36.0</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <th>Rain</th>\n      <td>11.794000</td>\n      <td>31.0</td>\n      <td>500</td>\n      <td>12.000000</td>\n      <td>12.0</td>\n      <td>500</td>\n      <td>984.429700</td>\n      <td>993.72</td>\n      <td>500</td>\n      <td>14.490000</td>\n      <td>31.0</td>\n      <td>500</td>\n      <td>1.975500</td>\n      <td>14.99</td>\n      <td>500</td>\n      <td>11.450000</td>\n      <td>31.0</td>\n      <td>500</td>\n    </tr>\n    <tr>\n      <th>Rain / Windy</th>\n      <td>11.466667</td>\n      <td>14.0</td>\n      <td>15</td>\n      <td>12.000000</td>\n      <td>12.0</td>\n      <td>15</td>\n      <td>980.860667</td>\n      <td>989.11</td>\n      <td>15</td>\n      <td>36.866667</td>\n      <td>48.0</td>\n      <td>15</td>\n      <td>2.286000</td>\n      <td>7.11</td>\n      <td>15</td>\n      <td>11.000000</td>\n      <td>14.0</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <th>Smoke</th>\n      <td>23.086811</td>\n      <td>38.0</td>\n      <td>599</td>\n      <td>22.000000</td>\n      <td>22.0</td>\n      <td>599</td>\n      <td>987.368247</td>\n      <td>999.98</td>\n      <td>599</td>\n      <td>7.001669</td>\n      <td>31.0</td>\n      <td>599</td>\n      <td>0.001269</td>\n      <td>0.76</td>\n      <td>599</td>\n      <td>22.639399</td>\n      <td>38.0</td>\n      <td>599</td>\n    </tr>\n    <tr>\n      <th>Smoke / Windy</th>\n      <td>17.666667</td>\n      <td>24.0</td>\n      <td>21</td>\n      <td>22.000000</td>\n      <td>22.0</td>\n      <td>21</td>\n      <td>991.920476</td>\n      <td>996.69</td>\n      <td>21</td>\n      <td>43.523810</td>\n      <td>57.0</td>\n      <td>21</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>21</td>\n      <td>17.666667</td>\n      <td>24.0</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <th>T-Storm</th>\n      <td>16.035714</td>\n      <td>37.0</td>\n      <td>28</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>28</td>\n      <td>984.009643</td>\n      <td>990.10</td>\n      <td>28</td>\n      <td>13.392857</td>\n      <td>24.0</td>\n      <td>28</td>\n      <td>1.196786</td>\n      <td>6.10</td>\n      <td>28</td>\n      <td>15.714286</td>\n      <td>37.0</td>\n      <td>28</td>\n    </tr>\n    <tr>\n      <th>Thunder</th>\n      <td>22.875000</td>\n      <td>31.0</td>\n      <td>8</td>\n      <td>38.000000</td>\n      <td>38.0</td>\n      <td>8</td>\n      <td>987.217500</td>\n      <td>990.10</td>\n      <td>8</td>\n      <td>11.000000</td>\n      <td>20.0</td>\n      <td>8</td>\n      <td>0.063750</td>\n      <td>0.51</td>\n      <td>8</td>\n      <td>22.875000</td>\n      <td>31.0</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <th>Thunder in the Vicinity</th>\n      <td>22.605263</td>\n      <td>42.0</td>\n      <td>38</td>\n      <td>39.894737</td>\n      <td>47.0</td>\n      <td>38</td>\n      <td>984.010000</td>\n      <td>990.10</td>\n      <td>38</td>\n      <td>13.657895</td>\n      <td>28.0</td>\n      <td>38</td>\n      <td>0.033421</td>\n      <td>0.51</td>\n      <td>38</td>\n      <td>22.473684</td>\n      <td>43.0</td>\n      <td>38</td>\n    </tr>\n    <tr>\n      <th>Widespread Dust</th>\n      <td>35.000000</td>\n      <td>38.0</td>\n      <td>7</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>7</td>\n      <td>989.062857</td>\n      <td>989.77</td>\n      <td>7</td>\n      <td>14.000000</td>\n      <td>31.0</td>\n      <td>7</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>7</td>\n      <td>32.285714</td>\n      <td>35.0</td>\n      <td>7</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
++     },
++     "execution_count": 20,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "weather_groups_agg = clean_weather_set.groupby(\"cloud_cover_description\").agg(['mean', 'max', 'count'])\n",
++    "weather_groups_agg"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:51.606459Z",
++     "end_time": "2023-05-16T21:35:51.687350Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 21,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\1578225388.py:1: FutureWarning: ['start_time', 'end_time', 'bike_id'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  metro_groups_agg_start = clean_metro_set.groupby(\"start_station_id\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "                 start_station_lat                   start_station_lon  \\\n                              mean        max  count              mean   \nstart_station_id                                                         \n3000                     34.025890  34.025890      2       -118.238220   \n3005                     34.048501  34.048550  57496       -118.258548   \n3006                     34.045540  34.045540  25942       -118.256668   \n3007                     34.050480  34.050480  20944       -118.254593   \n3008                     34.046612  34.046612  18008       -118.262733   \n...                            ...        ...    ...               ...   \n4631                     34.085770  34.085770      4       -118.382607   \n4632                     33.986671  33.986671    667       -118.440948   \n4633                     34.069981  34.069981    100       -118.260094   \n4634                     34.047390  34.047390    110       -118.219589   \n4638                     34.004650  34.004650     65       -118.255928   \n\n                                    end_station_id               \\\n                         max  count           mean   max  count   \nstart_station_id                                                  \n3000             -118.238220      2    3027.000000  3054      2   \n3005             -118.258530  57496    3197.358842  4634  57496   \n3006             -118.256660  25942    3164.346465  4587  25942   \n3007             -118.254590  20944    3165.227034  4627  20944   \n3008             -118.262730  18008    3222.440082  4627  18008   \n...                      ...    ...            ...   ...    ...   \n4631             -118.382607      4    4089.250000  4525      4   \n4632             -118.440948    667    4480.161919  4632    667   \n4633             -118.260094    100    3861.610000  4636    100   \n4634             -118.219589    110    3877.936364  4636    110   \n4638             -118.255928     65    4430.046154  4638     65   \n\n                 end_station_lat                   end_station_lon  \\\n                            mean        max  count            mean   \nstart_station_id                                                     \n3000                   34.032555  34.039219      2     -118.237354   \n3005                   34.046648  34.156181  57496     -118.255711   \n3006                   34.046349  34.145691  25942     -118.255120   \n3007                   34.047912  34.177650  20944     -118.254996   \n3008                   34.046341  34.154270  18008     -118.258573   \n...                          ...        ...    ...             ...   \n4631                   34.085927  34.100380      4     -118.296081   \n4632                   33.988754  34.094372    667     -118.442688   \n4633                   34.058931  34.094929    100     -118.250369   \n4634                   34.051260  34.090279    110     -118.239104   \n4638                   33.996084  34.046131     65     -118.269961   \n\n                                     \n                         max  count  \nstart_station_id                     \n3000             -118.236488      2  \n3005             -118.160170  57496  \n3006             -118.148230  25942  \n3007             -118.225410  20944  \n3008             -118.142151  18008  \n...                      ...    ...  \n4631             -118.261169      4  \n4632             -118.291718    667  \n4633             -118.219589    100  \n4634             -118.219589    110  \n4638             -118.248238     65  \n\n[392 rows x 15 columns]",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">start_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lon</th>\n      <th colspan=\"3\" halign=\"left\">end_station_id</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lon</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>start_station_id</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>3000</th>\n      <td>34.025890</td>\n      <td>34.025890</td>\n      <td>2</td>\n      <td>-118.238220</td>\n      <td>-118.238220</td>\n      <td>2</td>\n      <td>3027.000000</td>\n      <td>3054</td>\n      <td>2</td>\n      <td>34.032555</td>\n      <td>34.039219</td>\n      <td>2</td>\n      <td>-118.237354</td>\n      <td>-118.236488</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <th>3005</th>\n      <td>34.048501</td>\n      <td>34.048550</td>\n      <td>57496</td>\n      <td>-118.258548</td>\n      <td>-118.258530</td>\n      <td>57496</td>\n      <td>3197.358842</td>\n      <td>4634</td>\n      <td>57496</td>\n      <td>34.046648</td>\n      <td>34.156181</td>\n      <td>57496</td>\n      <td>-118.255711</td>\n      <td>-118.160170</td>\n      <td>57496</td>\n    </tr>\n    <tr>\n      <th>3006</th>\n      <td>34.045540</td>\n      <td>34.045540</td>\n      <td>25942</td>\n      <td>-118.256668</td>\n      <td>-118.256660</td>\n      <td>25942</td>\n      <td>3164.346465</td>\n      <td>4587</td>\n      <td>25942</td>\n      <td>34.046349</td>\n      <td>34.145691</td>\n      <td>25942</td>\n      <td>-118.255120</td>\n      <td>-118.148230</td>\n      <td>25942</td>\n    </tr>\n    <tr>\n      <th>3007</th>\n      <td>34.050480</td>\n      <td>34.050480</td>\n      <td>20944</td>\n      <td>-118.254593</td>\n      <td>-118.254590</td>\n      <td>20944</td>\n      <td>3165.227034</td>\n      <td>4627</td>\n      <td>20944</td>\n      <td>34.047912</td>\n      <td>34.177650</td>\n      <td>20944</td>\n      <td>-118.254996</td>\n      <td>-118.225410</td>\n      <td>20944</td>\n    </tr>\n    <tr>\n      <th>3008</th>\n      <td>34.046612</td>\n      <td>34.046612</td>\n      <td>18008</td>\n      <td>-118.262733</td>\n      <td>-118.262730</td>\n      <td>18008</td>\n      <td>3222.440082</td>\n      <td>4627</td>\n      <td>18008</td>\n      <td>34.046341</td>\n      <td>34.154270</td>\n      <td>18008</td>\n      <td>-118.258573</td>\n      <td>-118.142151</td>\n      <td>18008</td>\n    </tr>\n    <tr>\n      <th>...</th>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n    </tr>\n    <tr>\n      <th>4631</th>\n      <td>34.085770</td>\n      <td>34.085770</td>\n      <td>4</td>\n      <td>-118.382607</td>\n      <td>-118.382607</td>\n      <td>4</td>\n      <td>4089.250000</td>\n      <td>4525</td>\n      <td>4</td>\n      <td>34.085927</td>\n      <td>34.100380</td>\n      <td>4</td>\n      <td>-118.296081</td>\n      <td>-118.261169</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <th>4632</th>\n      <td>33.986671</td>\n      <td>33.986671</td>\n      <td>667</td>\n      <td>-118.440948</td>\n      <td>-118.440948</td>\n      <td>667</td>\n      <td>4480.161919</td>\n      <td>4632</td>\n      <td>667</td>\n      <td>33.988754</td>\n      <td>34.094372</td>\n      <td>667</td>\n      <td>-118.442688</td>\n      <td>-118.291718</td>\n      <td>667</td>\n    </tr>\n    <tr>\n      <th>4633</th>\n      <td>34.069981</td>\n      <td>34.069981</td>\n      <td>100</td>\n      <td>-118.260094</td>\n      <td>-118.260094</td>\n      <td>100</td>\n      <td>3861.610000</td>\n      <td>4636</td>\n      <td>100</td>\n      <td>34.058931</td>\n      <td>34.094929</td>\n      <td>100</td>\n      <td>-118.250369</td>\n      <td>-118.219589</td>\n      <td>100</td>\n    </tr>\n    <tr>\n      <th>4634</th>\n      <td>34.047390</td>\n      <td>34.047390</td>\n      <td>110</td>\n      <td>-118.219589</td>\n      <td>-118.219589</td>\n      <td>110</td>\n      <td>3877.936364</td>\n      <td>4636</td>\n      <td>110</td>\n      <td>34.051260</td>\n      <td>34.090279</td>\n      <td>110</td>\n      <td>-118.239104</td>\n      <td>-118.219589</td>\n      <td>110</td>\n    </tr>\n    <tr>\n      <th>4638</th>\n      <td>34.004650</td>\n      <td>34.004650</td>\n      <td>65</td>\n      <td>-118.255928</td>\n      <td>-118.255928</td>\n      <td>65</td>\n      <td>4430.046154</td>\n      <td>4638</td>\n      <td>65</td>\n      <td>33.996084</td>\n      <td>34.046131</td>\n      <td>65</td>\n      <td>-118.269961</td>\n      <td>-118.248238</td>\n      <td>65</td>\n    </tr>\n  </tbody>\n</table>\n<p>392 rows × 15 columns</p>\n</div>"
++     },
++     "execution_count": 21,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "metro_groups_agg_start = clean_metro_set.groupby(\"start_station_id\").agg(['mean', 'max', 'count'])\n",
++    "metro_groups_agg_start"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:51.653753Z",
++     "end_time": "2023-05-16T21:35:52.293849Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 22,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\1209517537.py:1: FutureWarning: ['start_time', 'end_time', 'bike_id'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  metro_groups_agg_end = clean_metro_set.groupby(\"end_station_id\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "               start_station_id              start_station_lat             \\\n                           mean   max  count              mean        max   \nend_station_id                                                              \n3000                3044.181818  3082     11         34.044029  34.056610   \n3005                3206.157391  4634  61992         34.047711  34.165218   \n3006                3150.935031  4587  26428         34.046050  34.147812   \n3007                3201.279150  4578  17324         34.049268  34.110031   \n3008                3211.372624  4627  18571         34.046390  34.149712   \n...                         ...   ...    ...               ...        ...   \n4635                4511.000000  4511      1         34.056278  34.056278   \n4636                4320.333333  4634      6         34.063447  34.082520   \n4638                4448.142857  4638     49         33.998086  34.051102   \n4639                4437.000000  4454      3         33.993052  34.017899   \n4640                4088.400000  4552     10         34.016294  34.085770   \n\n                      start_station_lon                    end_station_lat  \\\n                count              mean         max  count            mean   \nend_station_id                                                               \n3000               11       -118.241302 -118.231277     11       34.025890   \n3005            61992       -118.255778 -118.145042  61992       34.048501   \n3006            26428       -118.255310 -118.132210  26428       34.045540   \n3007            17324       -118.253995 -118.225410  17324       34.050480   \n3008            18571       -118.258398 -118.160170  18571       34.046612   \n...               ...               ...         ...    ...             ...   \n4635                1       -118.231773 -118.231773      1       34.025791   \n4636                6       -118.248828 -118.219589      6       34.025742   \n4638               49       -118.266307 -118.248238     49       34.004650   \n4639                3       -118.277225 -118.248238      3       33.943359   \n4640               10       -118.323093 -118.238320     10      -90.000000   \n\n                                 end_station_lon                     \n                      max  count            mean         max  count  \nend_station_id                                                       \n3000            34.025890     11     -118.238220 -118.238220     11  \n3005            34.048550  61992     -118.258550 -118.256668  61992  \n3006            34.045540  26428     -118.256675 -118.243530  26428  \n3007            34.050480  17324     -118.254593 -118.254590  17324  \n3008            34.046612  18571     -118.262733 -118.262730  18571  \n...                   ...    ...             ...         ...    ...  \n4635            34.025791      1     -118.238068 -118.238068      1  \n4636            34.025742      6     -118.238068 -118.238068      6  \n4638            34.004650     49     -118.255928 -118.255928     49  \n4639            33.943359      3     -118.248238 -118.248238      3  \n4640           -90.000000     10        0.000000    0.000000     10  \n\n[401 rows x 15 columns]",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">start_station_id</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lon</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lon</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>end_station_id</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>3000</th>\n      <td>3044.181818</td>\n      <td>3082</td>\n      <td>11</td>\n      <td>34.044029</td>\n      <td>34.056610</td>\n      <td>11</td>\n      <td>-118.241302</td>\n      <td>-118.231277</td>\n      <td>11</td>\n      <td>34.025890</td>\n      <td>34.025890</td>\n      <td>11</td>\n      <td>-118.238220</td>\n      <td>-118.238220</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <th>3005</th>\n      <td>3206.157391</td>\n      <td>4634</td>\n      <td>61992</td>\n      <td>34.047711</td>\n      <td>34.165218</td>\n      <td>61992</td>\n      <td>-118.255778</td>\n      <td>-118.145042</td>\n      <td>61992</td>\n      <td>34.048501</td>\n      <td>34.048550</td>\n      <td>61992</td>\n      <td>-118.258550</td>\n      <td>-118.256668</td>\n      <td>61992</td>\n    </tr>\n    <tr>\n      <th>3006</th>\n      <td>3150.935031</td>\n      <td>4587</td>\n      <td>26428</td>\n      <td>34.046050</td>\n      <td>34.147812</td>\n      <td>26428</td>\n      <td>-118.255310</td>\n      <td>-118.132210</td>\n      <td>26428</td>\n      <td>34.045540</td>\n      <td>34.045540</td>\n      <td>26428</td>\n      <td>-118.256675</td>\n      <td>-118.243530</td>\n      <td>26428</td>\n    </tr>\n    <tr>\n      <th>3007</th>\n      <td>3201.279150</td>\n      <td>4578</td>\n      <td>17324</td>\n      <td>34.049268</td>\n      <td>34.110031</td>\n      <td>17324</td>\n      <td>-118.253995</td>\n      <td>-118.225410</td>\n      <td>17324</td>\n      <td>34.050480</td>\n      <td>34.050480</td>\n      <td>17324</td>\n      <td>-118.254593</td>\n      <td>-118.254590</td>\n      <td>17324</td>\n    </tr>\n    <tr>\n      <th>3008</th>\n      <td>3211.372624</td>\n      <td>4627</td>\n      <td>18571</td>\n      <td>34.046390</td>\n      <td>34.149712</td>\n      <td>18571</td>\n      <td>-118.258398</td>\n      <td>-118.160170</td>\n      <td>18571</td>\n      <td>34.046612</td>\n      <td>34.046612</td>\n      <td>18571</td>\n      <td>-118.262733</td>\n      <td>-118.262730</td>\n      <td>18571</td>\n    </tr>\n    <tr>\n      <th>...</th>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n    </tr>\n    <tr>\n      <th>4635</th>\n      <td>4511.000000</td>\n      <td>4511</td>\n      <td>1</td>\n      <td>34.056278</td>\n      <td>34.056278</td>\n      <td>1</td>\n      <td>-118.231773</td>\n      <td>-118.231773</td>\n      <td>1</td>\n      <td>34.025791</td>\n      <td>34.025791</td>\n      <td>1</td>\n      <td>-118.238068</td>\n      <td>-118.238068</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <th>4636</th>\n      <td>4320.333333</td>\n      <td>4634</td>\n      <td>6</td>\n      <td>34.063447</td>\n      <td>34.082520</td>\n      <td>6</td>\n      <td>-118.248828</td>\n      <td>-118.219589</td>\n      <td>6</td>\n      <td>34.025742</td>\n      <td>34.025742</td>\n      <td>6</td>\n      <td>-118.238068</td>\n      <td>-118.238068</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <th>4638</th>\n      <td>4448.142857</td>\n      <td>4638</td>\n      <td>49</td>\n      <td>33.998086</td>\n      <td>34.051102</td>\n      <td>49</td>\n      <td>-118.266307</td>\n      <td>-118.248238</td>\n      <td>49</td>\n      <td>34.004650</td>\n      <td>34.004650</td>\n      <td>49</td>\n      <td>-118.255928</td>\n      <td>-118.255928</td>\n      <td>49</td>\n    </tr>\n    <tr>\n      <th>4639</th>\n      <td>4437.000000</td>\n      <td>4454</td>\n      <td>3</td>\n      <td>33.993052</td>\n      <td>34.017899</td>\n      <td>3</td>\n      <td>-118.277225</td>\n      <td>-118.248238</td>\n      <td>3</td>\n      <td>33.943359</td>\n      <td>33.943359</td>\n      <td>3</td>\n      <td>-118.248238</td>\n      <td>-118.248238</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <th>4640</th>\n      <td>4088.400000</td>\n      <td>4552</td>\n      <td>10</td>\n      <td>34.016294</td>\n      <td>34.085770</td>\n      <td>10</td>\n      <td>-118.323093</td>\n      <td>-118.238320</td>\n      <td>10</td>\n      <td>-90.000000</td>\n      <td>-90.000000</td>\n      <td>10</td>\n      <td>0.000000</td>\n      <td>0.000000</td>\n      <td>10</td>\n    </tr>\n  </tbody>\n</table>\n<p>401 rows × 15 columns</p>\n</div>"
++     },
++     "execution_count": 22,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "metro_groups_agg_end = clean_metro_set.groupby(\"end_station_id\").agg(['mean', 'max', 'count'])\n",
++    "metro_groups_agg_end"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:52.293849Z",
++     "end_time": "2023-05-16T21:35:52.939709Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 23,
++   "outputs": [],
++   "source": [
++    "import matplotlib as mpl\n",
++    "import matplotlib.pyplot as plt\n",
++    "import seaborn as sns\n",
++    "%matplotlib inline"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:52.939709Z",
++     "end_time": "2023-05-16T21:35:52.955346Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 34,
++   "outputs": [],
++   "source": [
++    "sns.pairplot(clean_weather_set, palette=\"magma\", height=3, hue=\"cloud_cover_description\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:56:10.416109Z",
++     "end_time": "2023-05-16T21:56:12.217172Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 35,
++   "outputs": [],
++   "source": [
++    "weather_set = pd.read_csv(\"CSV/Weather_LosAngeles_copy.csv\", sep=\",\")\n",
++    "\n",
++    "weather_set['timestamp'] = pd.to_datetime(weather_set['timestamp'])\n",
++    "\n",
++    "\n",
++    "mean_values_by_day = weather_set.groupby(weather_set[\"timestamp\"].dt.date).mean(numeric_only=True).round(1)\n",
++    "\n",
++    "for col in mean_values_by_day.columns:\n",
++    "    weather_set[col] = weather_set.apply(\n",
++    "        lambda row: mean_values_by_day.loc[row['timestamp'].date(), col]\n",
++    "        if pd.isnull(row[col]) else row[col],\n",
++    "        axis=1\n",
++    "    )\n",
++    "\n",
++    "weather_set['cloud_cover_description'].fillna(method='ffill', inplace=True)\n",
++    "weather_set.to_csv('CSV/Final_Weather_Set.csv', index=False)\n",
++    "weather_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:56:14.519980Z",
++     "end_time": "2023-05-16T21:56:15.167978Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 41,
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "<class 'pandas.core.frame.DataFrame'>\n",
++      "Int64Index: 1552782 entries, 0 to 1552781\n",
++      "Data columns (total 14 columns):\n",
++      " #   Column                  Non-Null Count    Dtype  \n",
++      "---  ------                  --------------    -----  \n",
++      " 0   Unnamed: 0              1552782 non-null  int64  \n",
++      " 1   start_time              1552782 non-null  object \n",
++      " 2   end_time                1552782 non-null  object \n",
++      " 3   start_station_id        1552782 non-null  int64  \n",
++      " 4   start_station_lat       1552782 non-null  float64\n",
++      " 5   start_station_lon       1552782 non-null  float64\n",
++      " 6   end_station_id          1552782 non-null  int64  \n",
++      " 7   end_station_lat         1552782 non-null  float64\n",
++      " 8   end_station_lon         1552782 non-null  float64\n",
++      " 9   bike_id                 1552782 non-null  object \n",
++      " 10  start_station_lat_mode  1552782 non-null  float64\n",
++      " 11  start_station_lon_mode  1552782 non-null  float64\n",
++      " 12  end_station_lat_mode    1552782 non-null  float64\n",
++      " 13  end_station_lon_mode    1552782 non-null  float64\n",
++      "dtypes: float64(8), int64(3), object(3)\n",
++      "memory usage: 177.7+ MB\n"
++     ]
++    }
++   ],
++   "source": [],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:59:48.176957Z",
++     "end_time": "2023-05-16T21:59:50.119155Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 42,
++   "outputs": [],
++   "source": [
++    "bike_set = pd.read_csv(\"CSV/metro_2017_2022_copy.csv\", sep=\",\")\n",
++    "#date7 = pd.to_datetime(\"07.05.2019\",format=\"%d.%m.%Y\")\n",
++    "#bike_set['start_time'] = pd.to_datetime(bike_set['start_time'], format=\"%H/%M/%S %d-%m-%Y\") #13/37/00 01-09-2021\n",
++    "#bike_set['start_time'] = pd.to_datetime(bike_set['start_time'], infer_datetime_format=True)\n",
++    "#bike_set['end_time'] = pd.to_datetime(bike_set['end_time'])\n",
++    "bike_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T22:00:08.291877Z",
++     "end_time": "2023-05-16T22:03:47.048339Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 45,
++   "outputs": [],
++   "source": [
++    "bike_set.sort_values()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T22:05:54.144900Z",
++     "end_time": "2023-05-16T22:06:00.764481Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 31,
++   "outputs": [],
++   "source": [
++    "# Group the dataframe by start station ID\n",
++    "grouped_start = bike_set.groupby('start_station_id', group_keys=False)\n",
++    "\n",
++    "# Fill missing start station latitudes with the corresponding value for that station\n",
++    "bike_set['start_station_lat'] = grouped_start['start_station_lat'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Fill missing start station longitudes with the corresponding value for that station\n",
++    "bike_set['start_station_lon'] = grouped_start['start_station_lon'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Group the dataframe by end station ID\n",
++    "grouped_end = bike_set.groupby('end_station_id', group_keys=False)\n",
++    "\n",
++    "# Fill missing end station latitudes with the corresponding value for that station\n",
++    "bike_set['end_station_lat'] = grouped_end['end_station_lat'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Fill missing end station longitudes with the corresponding value for that station\n",
++    "bike_set['end_station_lon'] = grouped_end['end_station_lon'].apply(lambda x: x.fillna(x.mean()))\n",
++    "bike_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:50:30.052625Z",
++     "end_time": "2023-05-16T21:52:41.908101Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 32,
++   "outputs": [],
++   "source": [
++    "print(bike_set[['start_station_id', 'end_station_id', 'start_station_lat', 'start_station_lon', 'end_station_lat', 'end_station_lon']].isnull().sum())"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:52:41.908101Z",
++     "end_time": "2023-05-16T21:52:48.419147Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# create a dictionary of station_id: (lat, lon) pairs\n",
++    "station_info = {}\n",
++    "for i, row in bike_set.iterrows():\n",
++    "    start_id = row['start_station_id']\n",
++    "    start_lat = row['start_station_lat']\n",
++    "    start_lon = row['start_station_lon']\n",
++    "    end_id = row['end_station_id']\n",
++    "    end_lat = row['end_station_lat']\n",
++    "    end_lon = row['end_station_lon']\n",
++    "\n",
++    "    # add start station info to dictionary\n",
++    "    if pd.notna(start_lat) and pd.notna(start_lon):\n",
++    "        station_info[start_id] = (start_lat, start_lon)\n",
++    "    else:\n",
++    "        if start_id not in station_info:\n",
++    "            station_info[start_id] = None\n",
++    "\n",
++    "    # add end station info to dictionary\n",
++    "    if pd.notna(end_lat) and pd.notna(end_lon):\n",
++    "        station_info[end_id] = (end_lat, end_lon)\n",
++    "    else:\n",
++    "        if end_id not in station_info:\n",
++    "            station_info[end_id] = None\n",
++    "\n",
++    "# fill in missing values using the dictionary\n",
++    "bike_set['start_station_lat'] = bike_set['start_station_lat'].fillna(bike_set['start_station_id'].map(lambda x: station_info[x][0] if station_info[x] is not None else None))\n",
++    "bike_set['start_station_lon'] = bike_set['start_station_lon'].fillna(bike_set['start_station_id'].map(lambda x: station_info[x][1] if station_info[x] is not None else None))\n",
++    "bike_set['end_station_lat'] = bike_set['end_station_lat'].fillna(bike_set['end_station_id'].map(lambda x: station_info[x][0] if station_info[x] is not None else None))\n",
++    "bike_set['end_station_lon'] = bike_set['end_station_lon'].fillna(bike_set['end_station_id'].map(lambda x: station_info[x][1] if station_info[x] is not None else None))\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T18:56:40.423193Z",
++     "end_time": "2023-05-16T18:57:33.960131Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "print(bike_set[['start_station_id', 'end_station_id', 'start_station_lat', 'start_station_lon', 'end_station_lat', 'end_station_lon']].isnull().sum())\n",
++    "print(\"Unique station IDs in bike_set:\", len(bike_set['start_station_id'].unique()))\n",
++    "print(\"Unique station IDs in station_info:\", len(bike_set['end_station_id'].unique()))\n",
++    "bike_set.info()\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:49:25.160171Z",
++     "end_time": "2023-05-16T20:49:25.582334Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "#Sort by Start Startion ID and forward fill\n",
++    "bike_set.sort_values(\"start_station_id\")\n",
++    "bike_set[\"start_station_lat\"].fillna(method=\"ffill\", inplace=True)\n",
++    "bike_set[\"start_station_lon\"].fillna(method=\"ffill\", inplace=True)\n",
++    "#Sort by End Startion ID and forward fill\n",
++    "\n",
++    "bike_set.sort_values(\"end_station_id\")\n",
++    "bike_set[\"end_station_lat\"].fillna(method=\"ffill\", inplace=True)\n",
++    "bike_set[\"end_station_lon\"].fillna(method=\"ffill\", inplace=True)"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:00:31.301086Z",
++     "end_time": "2023-05-16T20:00:32.026617Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "stid0 = bike_set.loc[0,'start_station_id']\n",
++    "start_lat0 = bike_set.loc[0, 'start_station_lat']\n",
++    "start_lon0 = bike_set.loc[0, 'start_station_lon']\n",
++    "for i, row in bike_set.iterrows():\n",
++    "    stid1 = row['start_station_id']\n",
++    "    start_lat1 = row['start_station_lat']\n",
++    "    start_lon1 = row['start_station_lon']\n",
++    "    if stid1 == stid0:\n",
++    "        if start_lat1 != start_lat0:\n",
++    "            bike_set.at[i, 'start_station_lat'] = start_lat0\n",
++    "        if start_lon1 != start_lon0:\n",
++    "            bike_set.at[i, 'start_station_lon'] = start_lon0\n",
++    "\n",
++    "    stid0 = stid1\n",
++    "    start_lat0 = start_lat1\n",
++    "    start_lon0 = start_lon1"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:18:21.703740Z",
++     "end_time": "2023-05-16T20:19:08.114372Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "bike_set.to_csv(\"CSV/biketest1.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:19:57.414072Z",
++     "end_time": "2023-05-16T20:20:06.340877Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "bike_set['sdeltaLat'] = bike_set['start_station_lat'].shift(periods=1)\n",
++    "bike_set['sdeltaLon'] = bike_set['start_station_lon'].shift(periods=1)\n",
++    "bike_set['edeltaLat'] = bike_set['end_station_lat'].shift(periods=1)\n",
++    "bike_set['edeltaLon'] = bike_set['end_station_lon'].shift(periods=1)\n",
++    "\n",
++    "bike_set.head()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:13:43.438398Z",
++     "end_time": "2023-05-16T20:13:43.485312Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "\n"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
+    "cell_type": "code",
+    "execution_count": null,
+    "outputs": [],
+    "source": [
+-    "import pandas as pd\n",
+-    "metro_set = pd.read_csv(\"../Data_Cleanup/outCSV/Metro.csv\", )"
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')['start_station_lat', 'start_station_lon'].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "print(bike_set_agg_start)\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:41:42.460056Z",
++     "end_time": "2023-05-16T20:41:42.645357Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')[['start_station_lat', 'start_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "print(bike_set_agg_start)\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:41:51.395823Z",
++     "end_time": "2023-05-16T20:41:51.585557Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')[['start_station_lat', 'start_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Merge the mode values with the original dataframe based on 'start_station_id'\n",
++    "bike_set_merged = bike_set.merge(bike_set_agg_start, on='start_station_id', suffixes=('', '_mode'))\n",
++    "\n",
++    "# Replace inconsistent cells with mode values\n",
++    "bike_set_merged['start_station_lat'] = bike_set_merged['start_station_lat'].fillna(bike_set_merged['start_station_lat_mode'])\n",
++    "bike_set_merged['start_station_lon'] = bike_set_merged['start_station_lon'].fillna(bike_set_merged['start_station_lon_mode'])\n",
++    "\n",
++    "# Drop the mode-related columns if needed\n",
++    "bike_set_merged = bike_set_merged.drop([ 'sdeltaLon', 'sdeltaLat', 'edeltaLat', 'edeltaLon'], axis=1)\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "bike_set_merged.head()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:07:16.562434Z",
++     "end_time": "2023-05-16T21:07:17.278799Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "for i, row in bike_set_merged.iterrows():\n",
++    "    bike_set_merged.at[i, 'start_station_lat'] = bike_set_merged.loc[i, 'start_station_lat_mode']\n",
++    "    bike_set_merged.at[i, 'start_station_lon'] = bike_set_merged.loc[i, 'start_station_lon_mode']\n",
++    "\n",
++    "\n",
++    "bike_set_merged.to_csv(\"CSV/biketest4.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:13:53.709976Z",
++     "end_time": "2023-05-16T21:16:17.972155Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'end_station_id' and calculate the mode for 'end_station_lat' and 'end_station_lon'\n",
++    "bike_set_agg_end = bike_set.groupby('end_station_id')[['end_station_lat', 'end_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Merge the mode values with the original dataframe based on 'end_station_id'\n",
++    "bike_set_merged = bike_set.merge(bike_set_agg_end, on='end_station_id', suffixes=('', '_mode'))\n",
++    "\n",
++    "# Replace inconsistent cells with mode values\n",
++    "bike_set_merged['end_station_lat'] = bike_set_merged['end_station_lat'].fillna(bike_set_merged['end_station_lat_mode'])\n",
++    "bike_set_merged['end_station_lon'] = bike_set_merged['end_station_lon'].fillna(bike_set_merged['end_station_lon_mode'])\n",
++    "\n",
++    "# Drop the mode-related columns if needed\n",
++    "\n",
++    "\n",
++    "for i, row in bike_set_merged.iterrows():\n",
++    "    bike_set_merged.at[i, 'end_station_lat'] = bike_set_merged.loc[i, 'end_station_lat_mode']\n",
++    "    bike_set_merged.at[i, 'end_station_lon'] = bike_set_merged.loc[i, 'end_station_lon_mode']\n",
++    "\n",
++    "\n",
++    "bike_set_merged.to_csv(\"CSV/biketest5.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:19:15.737860Z",
++     "end_time": "2023-05-16T21:21:36.037714Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "print(\"Unique station IDs in bike_set:\", len(bike_set_merged['start_station_id'].unique()))\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:56:42.496850Z",
++     "end_time": "2023-05-16T20:56:42.576433Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 25,
++   "outputs": [
++    {
++     "ename": "NameError",
++     "evalue": "name 'bike_set_merged' is not defined",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mNameError\u001B[0m                                 Traceback (most recent call last)",
++      "Cell \u001B[1;32mIn[25], line 1\u001B[0m\n\u001B[1;32m----> 1\u001B[0m clean_metro_sett \u001B[38;5;241m=\u001B[39m \u001B[43mbike_set_merged\u001B[49m\u001B[38;5;241m.\u001B[39mdrop([\u001B[38;5;124m'\u001B[39m\u001B[38;5;124mend_station_lat_mode\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124mend_station_lon_mode\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124msdeltaLon\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124msdeltaLat\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124medeltaLat\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124medeltaLon\u001B[39m\u001B[38;5;124m'\u001B[39m], axis\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m1\u001B[39m)\n\u001B[0;32m      2\u001B[0m clean_metro_sett\u001B[38;5;241m.\u001B[39mto_csv(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mCSV/CleanMetroSet.csv\u001B[39m\u001B[38;5;124m\"\u001B[39m)\n",
++      "\u001B[1;31mNameError\u001B[0m: name 'bike_set_merged' is not defined"
++     ]
++    }
++   ],
++   "source": [
++    "clean_set = bike_set_merged.drop([ 'sdeltaLon', 'sdeltaLat', 'edeltaLat', 'edeltaLon'], axis=1)"
+    ],
+    "metadata": {
+     "collapsed": false
+Index: Yusuf_Playground/Yusuf_Playground.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n \"cells\": [\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": null,\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"import pandas as pd\\n\",\r\n    \"metro_set = pd.read_csv(\\\"../Data_Cleanup/outCSV/Metro.csv\\\", )\"\r\n   ],\r\n   \"metadata\": {\r\n    \"collapsed\": false\r\n   }\r\n  }\r\n ],\r\n \"metadata\": {\r\n  \"kernelspec\": {\r\n   \"display_name\": \"Python 3\",\r\n   \"language\": \"python\",\r\n   \"name\": \"python3\"\r\n  },\r\n  \"language_info\": {\r\n   \"codemirror_mode\": {\r\n    \"name\": \"ipython\",\r\n    \"version\": 2\r\n   },\r\n   \"file_extension\": \".py\",\r\n   \"mimetype\": \"text/x-python\",\r\n   \"name\": \"python\",\r\n   \"nbconvert_exporter\": \"python\",\r\n   \"pygments_lexer\": \"ipython2\",\r\n   \"version\": \"2.7.6\"\r\n  }\r\n },\r\n \"nbformat\": 4,\r\n \"nbformat_minor\": 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Yusuf_Playground/Yusuf_Playground.ipynb b/Yusuf_Playground/Yusuf_Playground.ipynb
+--- a/Yusuf_Playground/Yusuf_Playground.ipynb	
++++ b/Yusuf_Playground/Yusuf_Playground.ipynb	
+@@ -1,12 +1,607 @@
+ {
+  "cells": [
+   {
++   "cell_type": "code",
++   "execution_count": 20,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\976572699.py:1: FutureWarning: ['city', 'timestamp'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  weather_groups_agg = clean_weather_set.groupby(\"cloud_cover_description\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "                        temperature              cloud_cover               \\\n                               mean   max  count        mean   max  count   \ncloud_cover_description                                                     \nBlowing Dust              17.400000  21.0     10   19.000000  19.0     10   \nBlowing Dust / Windy      14.777778  16.0     18   19.000000  19.0     18   \nCloudy                    15.534459  39.0  11782   26.000000  26.0  11782   \nCloudy / Windy            15.818182  25.0     11   26.000000  26.0     11   \nFair                      19.924586  54.0  47140   33.540878  34.0  47140   \nFair / Windy              18.342723  30.0    213   33.596244  34.0    213   \nFog                       12.114929  19.0    844   20.000000  20.0    844   \nHaze                      17.418913  37.0   2337   21.000000  21.0   2337   \nHaze / Windy              19.000000  19.0      2   21.000000  21.0      2   \nHeavy Rain                11.275556  21.0    225   40.000000  40.0    225   \nHeavy Rain / Windy        12.000000  16.0     17   40.000000  40.0     17   \nHeavy T-Storm             12.200000  13.0      5    4.000000   4.0      5   \nLight Rain                12.790972  41.0   2038   11.000000  11.0   2038   \nLight Rain / Windy        12.625000  16.0     24   11.000000  11.0     24   \nLight Rain with Thunder   21.000000  26.0      6    4.000000   4.0      6   \nMostly Cloudy             16.027015  39.0   4664   27.476415  28.0   4664   \nMostly Cloudy / Windy     17.000000  25.0     14   27.285714  28.0     14   \nPartly Cloudy             17.438710  42.0   6355   29.483871  30.0   6355   \nPartly Cloudy / Windy     19.000000  37.0     25   29.480000  30.0     25   \nRain                      11.794000  31.0    500   12.000000  12.0    500   \nRain / Windy              11.466667  14.0     15   12.000000  12.0     15   \nSmoke                     23.086811  38.0    599   22.000000  22.0    599   \nSmoke / Windy             17.666667  24.0     21   22.000000  22.0     21   \nT-Storm                   16.035714  37.0     28    4.000000   4.0     28   \nThunder                   22.875000  31.0      8   38.000000  38.0      8   \nThunder in the Vicinity   22.605263  42.0     38   39.894737  47.0     38   \nWidespread Dust           35.000000  38.0      7   19.000000  19.0      7   \n\n                           pressure                  windspeed               \\\n                               mean      max  count       mean   max  count   \ncloud_cover_description                                                       \nBlowing Dust             984.405000   988.13     10  20.600000  31.0     10   \nBlowing Dust / Windy     987.393889   989.77     18  44.833333  65.0     18   \nCloudy                   986.377744   998.99  11782   8.212952  31.0  11782   \nCloudy / Windy           982.557273   986.48     11  40.181818  48.0     11   \nFair                     987.042441  1002.94  47140   8.273271  31.0  47140   \nFair / Windy             987.012113  1002.28    213  37.741784  65.0    213   \nFog                      988.681303   997.02    844   4.944313  22.0    844   \nHaze                     987.029688   994.71   2337   6.736842  30.0   2337   \nHaze / Windy             975.445000   975.61      2  39.000000  43.0      2   \nHeavy Rain               983.480356   992.41    225  16.195556  31.0    225   \nHeavy Rain / Windy       979.427059   985.82     17  39.823529  46.0     17   \nHeavy T-Storm            985.558000   986.81      5  17.000000  30.0      5   \nLight Rain               985.959632   999.65   2038  12.351816  31.0   2038   \nLight Rain / Windy       979.701250   987.14     24  36.333333  48.0     24   \nLight Rain with Thunder  986.258333   988.78      6  10.500000  24.0      6   \nMostly Cloudy            986.632575   997.67   4664   8.016081  31.0   4664   \nMostly Cloudy / Windy    982.292143   987.47     14  40.500000  57.0     14   \nPartly Cloudy            987.138357   999.32   6355   7.972935  31.0   6355   \nPartly Cloudy / Windy    984.146800  1001.62     25  36.360000  44.0     25   \nRain                     984.429700   993.72    500  14.490000  31.0    500   \nRain / Windy             980.860667   989.11     15  36.866667  48.0     15   \nSmoke                    987.368247   999.98    599   7.001669  31.0    599   \nSmoke / Windy            991.920476   996.69     21  43.523810  57.0     21   \nT-Storm                  984.009643   990.10     28  13.392857  24.0     28   \nThunder                  987.217500   990.10      8  11.000000  20.0      8   \nThunder in the Vicinity  984.010000   990.10     38  13.657895  28.0     38   \nWidespread Dust          989.062857   989.77      7  14.000000  31.0      7   \n\n                        precipitation               felt_temperature        \\\n                                 mean    max  count             mean   max   \ncloud_cover_description                                                      \nBlowing Dust                 0.000000   0.00     10        17.400000  21.0   \nBlowing Dust / Windy         0.000000   0.00     18        14.777778  16.0   \nCloudy                       0.018791   9.91  11782        15.511628  37.0   \nCloudy / Windy               0.000000   0.00     11        15.727273  24.0   \nFair                         0.000075   0.76  47140        19.719516  44.0   \nFair / Windy                 0.000000   0.00    213        18.061033  29.0   \nFog                          0.006552   1.27    844        12.035545  19.0   \nHaze                         0.001840   1.52   2337        17.405220  37.0   \nHaze / Windy                 0.000000   0.00      2        19.000000  19.0   \nHeavy Rain                   3.335956  13.97    225        10.684444  21.0   \nHeavy Rain / Windy           4.841176  11.18     17        11.823529  16.0   \nHeavy T-Storm                2.286000   4.06      5        12.200000  13.0   \nLight Rain                   0.613886  18.54   2038        12.624141  39.0   \nLight Rain / Windy           0.740000   3.30     24        12.625000  16.0   \nLight Rain with Thunder      0.380000   1.78      6        21.166667  27.0   \nMostly Cloudy                0.007063   4.06   4664        15.984777  37.0   \nMostly Cloudy / Windy        0.000000   0.00     14        16.928571  24.0   \nPartly Cloudy                0.001032   1.27   6355        17.317231  40.0   \nPartly Cloudy / Windy        0.000000   0.00     25        18.800000  36.0   \nRain                         1.975500  14.99    500        11.450000  31.0   \nRain / Windy                 2.286000   7.11     15        11.000000  14.0   \nSmoke                        0.001269   0.76    599        22.639399  38.0   \nSmoke / Windy                0.000000   0.00     21        17.666667  24.0   \nT-Storm                      1.196786   6.10     28        15.714286  37.0   \nThunder                      0.063750   0.51      8        22.875000  31.0   \nThunder in the Vicinity      0.033421   0.51     38        22.473684  43.0   \nWidespread Dust              0.000000   0.00      7        32.285714  35.0   \n\n                                \n                         count  \ncloud_cover_description         \nBlowing Dust                10  \nBlowing Dust / Windy        18  \nCloudy                   11782  \nCloudy / Windy              11  \nFair                     47140  \nFair / Windy               213  \nFog                        844  \nHaze                      2337  \nHaze / Windy                 2  \nHeavy Rain                 225  \nHeavy Rain / Windy          17  \nHeavy T-Storm                5  \nLight Rain                2038  \nLight Rain / Windy          24  \nLight Rain with Thunder      6  \nMostly Cloudy             4664  \nMostly Cloudy / Windy       14  \nPartly Cloudy             6355  \nPartly Cloudy / Windy       25  \nRain                       500  \nRain / Windy                15  \nSmoke                      599  \nSmoke / Windy               21  \nT-Storm                     28  \nThunder                      8  \nThunder in the Vicinity     38  \nWidespread Dust              7  ",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">temperature</th>\n      <th colspan=\"3\" halign=\"left\">cloud_cover</th>\n      <th colspan=\"3\" halign=\"left\">pressure</th>\n      <th colspan=\"3\" halign=\"left\">windspeed</th>\n      <th colspan=\"3\" halign=\"left\">precipitation</th>\n      <th colspan=\"3\" halign=\"left\">felt_temperature</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>cloud_cover_description</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>Blowing Dust</th>\n      <td>17.400000</td>\n      <td>21.0</td>\n      <td>10</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>10</td>\n      <td>984.405000</td>\n      <td>988.13</td>\n      <td>10</td>\n      <td>20.600000</td>\n      <td>31.0</td>\n      <td>10</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>10</td>\n      <td>17.400000</td>\n      <td>21.0</td>\n      <td>10</td>\n    </tr>\n    <tr>\n      <th>Blowing Dust / Windy</th>\n      <td>14.777778</td>\n      <td>16.0</td>\n      <td>18</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>18</td>\n      <td>987.393889</td>\n      <td>989.77</td>\n      <td>18</td>\n      <td>44.833333</td>\n      <td>65.0</td>\n      <td>18</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>18</td>\n      <td>14.777778</td>\n      <td>16.0</td>\n      <td>18</td>\n    </tr>\n    <tr>\n      <th>Cloudy</th>\n      <td>15.534459</td>\n      <td>39.0</td>\n      <td>11782</td>\n      <td>26.000000</td>\n      <td>26.0</td>\n      <td>11782</td>\n      <td>986.377744</td>\n      <td>998.99</td>\n      <td>11782</td>\n      <td>8.212952</td>\n      <td>31.0</td>\n      <td>11782</td>\n      <td>0.018791</td>\n      <td>9.91</td>\n      <td>11782</td>\n      <td>15.511628</td>\n      <td>37.0</td>\n      <td>11782</td>\n    </tr>\n    <tr>\n      <th>Cloudy / Windy</th>\n      <td>15.818182</td>\n      <td>25.0</td>\n      <td>11</td>\n      <td>26.000000</td>\n      <td>26.0</td>\n      <td>11</td>\n      <td>982.557273</td>\n      <td>986.48</td>\n      <td>11</td>\n      <td>40.181818</td>\n      <td>48.0</td>\n      <td>11</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>11</td>\n      <td>15.727273</td>\n      <td>24.0</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <th>Fair</th>\n      <td>19.924586</td>\n      <td>54.0</td>\n      <td>47140</td>\n      <td>33.540878</td>\n      <td>34.0</td>\n      <td>47140</td>\n      <td>987.042441</td>\n      <td>1002.94</td>\n      <td>47140</td>\n      <td>8.273271</td>\n      <td>31.0</td>\n      <td>47140</td>\n      <td>0.000075</td>\n      <td>0.76</td>\n      <td>47140</td>\n      <td>19.719516</td>\n      <td>44.0</td>\n      <td>47140</td>\n    </tr>\n    <tr>\n      <th>Fair / Windy</th>\n      <td>18.342723</td>\n      <td>30.0</td>\n      <td>213</td>\n      <td>33.596244</td>\n      <td>34.0</td>\n      <td>213</td>\n      <td>987.012113</td>\n      <td>1002.28</td>\n      <td>213</td>\n      <td>37.741784</td>\n      <td>65.0</td>\n      <td>213</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>213</td>\n      <td>18.061033</td>\n      <td>29.0</td>\n      <td>213</td>\n    </tr>\n    <tr>\n      <th>Fog</th>\n      <td>12.114929</td>\n      <td>19.0</td>\n      <td>844</td>\n      <td>20.000000</td>\n      <td>20.0</td>\n      <td>844</td>\n      <td>988.681303</td>\n      <td>997.02</td>\n      <td>844</td>\n      <td>4.944313</td>\n      <td>22.0</td>\n      <td>844</td>\n      <td>0.006552</td>\n      <td>1.27</td>\n      <td>844</td>\n      <td>12.035545</td>\n      <td>19.0</td>\n      <td>844</td>\n    </tr>\n    <tr>\n      <th>Haze</th>\n      <td>17.418913</td>\n      <td>37.0</td>\n      <td>2337</td>\n      <td>21.000000</td>\n      <td>21.0</td>\n      <td>2337</td>\n      <td>987.029688</td>\n      <td>994.71</td>\n      <td>2337</td>\n      <td>6.736842</td>\n      <td>30.0</td>\n      <td>2337</td>\n      <td>0.001840</td>\n      <td>1.52</td>\n      <td>2337</td>\n      <td>17.405220</td>\n      <td>37.0</td>\n      <td>2337</td>\n    </tr>\n    <tr>\n      <th>Haze / Windy</th>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>2</td>\n      <td>21.000000</td>\n      <td>21.0</td>\n      <td>2</td>\n      <td>975.445000</td>\n      <td>975.61</td>\n      <td>2</td>\n      <td>39.000000</td>\n      <td>43.0</td>\n      <td>2</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>2</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <th>Heavy Rain</th>\n      <td>11.275556</td>\n      <td>21.0</td>\n      <td>225</td>\n      <td>40.000000</td>\n      <td>40.0</td>\n      <td>225</td>\n      <td>983.480356</td>\n      <td>992.41</td>\n      <td>225</td>\n      <td>16.195556</td>\n      <td>31.0</td>\n      <td>225</td>\n      <td>3.335956</td>\n      <td>13.97</td>\n      <td>225</td>\n      <td>10.684444</td>\n      <td>21.0</td>\n      <td>225</td>\n    </tr>\n    <tr>\n      <th>Heavy Rain / Windy</th>\n      <td>12.000000</td>\n      <td>16.0</td>\n      <td>17</td>\n      <td>40.000000</td>\n      <td>40.0</td>\n      <td>17</td>\n      <td>979.427059</td>\n      <td>985.82</td>\n      <td>17</td>\n      <td>39.823529</td>\n      <td>46.0</td>\n      <td>17</td>\n      <td>4.841176</td>\n      <td>11.18</td>\n      <td>17</td>\n      <td>11.823529</td>\n      <td>16.0</td>\n      <td>17</td>\n    </tr>\n    <tr>\n      <th>Heavy T-Storm</th>\n      <td>12.200000</td>\n      <td>13.0</td>\n      <td>5</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>5</td>\n      <td>985.558000</td>\n      <td>986.81</td>\n      <td>5</td>\n      <td>17.000000</td>\n      <td>30.0</td>\n      <td>5</td>\n      <td>2.286000</td>\n      <td>4.06</td>\n      <td>5</td>\n      <td>12.200000</td>\n      <td>13.0</td>\n      <td>5</td>\n    </tr>\n    <tr>\n      <th>Light Rain</th>\n      <td>12.790972</td>\n      <td>41.0</td>\n      <td>2038</td>\n      <td>11.000000</td>\n      <td>11.0</td>\n      <td>2038</td>\n      <td>985.959632</td>\n      <td>999.65</td>\n      <td>2038</td>\n      <td>12.351816</td>\n      <td>31.0</td>\n      <td>2038</td>\n      <td>0.613886</td>\n      <td>18.54</td>\n      <td>2038</td>\n      <td>12.624141</td>\n      <td>39.0</td>\n      <td>2038</td>\n    </tr>\n    <tr>\n      <th>Light Rain / Windy</th>\n      <td>12.625000</td>\n      <td>16.0</td>\n      <td>24</td>\n      <td>11.000000</td>\n      <td>11.0</td>\n      <td>24</td>\n      <td>979.701250</td>\n      <td>987.14</td>\n      <td>24</td>\n      <td>36.333333</td>\n      <td>48.0</td>\n      <td>24</td>\n      <td>0.740000</td>\n      <td>3.30</td>\n      <td>24</td>\n      <td>12.625000</td>\n      <td>16.0</td>\n      <td>24</td>\n    </tr>\n    <tr>\n      <th>Light Rain with Thunder</th>\n      <td>21.000000</td>\n      <td>26.0</td>\n      <td>6</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>6</td>\n      <td>986.258333</td>\n      <td>988.78</td>\n      <td>6</td>\n      <td>10.500000</td>\n      <td>24.0</td>\n      <td>6</td>\n      <td>0.380000</td>\n      <td>1.78</td>\n      <td>6</td>\n      <td>21.166667</td>\n      <td>27.0</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <th>Mostly Cloudy</th>\n      <td>16.027015</td>\n      <td>39.0</td>\n      <td>4664</td>\n      <td>27.476415</td>\n      <td>28.0</td>\n      <td>4664</td>\n      <td>986.632575</td>\n      <td>997.67</td>\n      <td>4664</td>\n      <td>8.016081</td>\n      <td>31.0</td>\n      <td>4664</td>\n      <td>0.007063</td>\n      <td>4.06</td>\n      <td>4664</td>\n      <td>15.984777</td>\n      <td>37.0</td>\n      <td>4664</td>\n    </tr>\n    <tr>\n      <th>Mostly Cloudy / Windy</th>\n      <td>17.000000</td>\n      <td>25.0</td>\n      <td>14</td>\n      <td>27.285714</td>\n      <td>28.0</td>\n      <td>14</td>\n      <td>982.292143</td>\n      <td>987.47</td>\n      <td>14</td>\n      <td>40.500000</td>\n      <td>57.0</td>\n      <td>14</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>14</td>\n      <td>16.928571</td>\n      <td>24.0</td>\n      <td>14</td>\n    </tr>\n    <tr>\n      <th>Partly Cloudy</th>\n      <td>17.438710</td>\n      <td>42.0</td>\n      <td>6355</td>\n      <td>29.483871</td>\n      <td>30.0</td>\n      <td>6355</td>\n      <td>987.138357</td>\n      <td>999.32</td>\n      <td>6355</td>\n      <td>7.972935</td>\n      <td>31.0</td>\n      <td>6355</td>\n      <td>0.001032</td>\n      <td>1.27</td>\n      <td>6355</td>\n      <td>17.317231</td>\n      <td>40.0</td>\n      <td>6355</td>\n    </tr>\n    <tr>\n      <th>Partly Cloudy / Windy</th>\n      <td>19.000000</td>\n      <td>37.0</td>\n      <td>25</td>\n      <td>29.480000</td>\n      <td>30.0</td>\n      <td>25</td>\n      <td>984.146800</td>\n      <td>1001.62</td>\n      <td>25</td>\n      <td>36.360000</td>\n      <td>44.0</td>\n      <td>25</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>25</td>\n      <td>18.800000</td>\n      <td>36.0</td>\n      <td>25</td>\n    </tr>\n    <tr>\n      <th>Rain</th>\n      <td>11.794000</td>\n      <td>31.0</td>\n      <td>500</td>\n      <td>12.000000</td>\n      <td>12.0</td>\n      <td>500</td>\n      <td>984.429700</td>\n      <td>993.72</td>\n      <td>500</td>\n      <td>14.490000</td>\n      <td>31.0</td>\n      <td>500</td>\n      <td>1.975500</td>\n      <td>14.99</td>\n      <td>500</td>\n      <td>11.450000</td>\n      <td>31.0</td>\n      <td>500</td>\n    </tr>\n    <tr>\n      <th>Rain / Windy</th>\n      <td>11.466667</td>\n      <td>14.0</td>\n      <td>15</td>\n      <td>12.000000</td>\n      <td>12.0</td>\n      <td>15</td>\n      <td>980.860667</td>\n      <td>989.11</td>\n      <td>15</td>\n      <td>36.866667</td>\n      <td>48.0</td>\n      <td>15</td>\n      <td>2.286000</td>\n      <td>7.11</td>\n      <td>15</td>\n      <td>11.000000</td>\n      <td>14.0</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <th>Smoke</th>\n      <td>23.086811</td>\n      <td>38.0</td>\n      <td>599</td>\n      <td>22.000000</td>\n      <td>22.0</td>\n      <td>599</td>\n      <td>987.368247</td>\n      <td>999.98</td>\n      <td>599</td>\n      <td>7.001669</td>\n      <td>31.0</td>\n      <td>599</td>\n      <td>0.001269</td>\n      <td>0.76</td>\n      <td>599</td>\n      <td>22.639399</td>\n      <td>38.0</td>\n      <td>599</td>\n    </tr>\n    <tr>\n      <th>Smoke / Windy</th>\n      <td>17.666667</td>\n      <td>24.0</td>\n      <td>21</td>\n      <td>22.000000</td>\n      <td>22.0</td>\n      <td>21</td>\n      <td>991.920476</td>\n      <td>996.69</td>\n      <td>21</td>\n      <td>43.523810</td>\n      <td>57.0</td>\n      <td>21</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>21</td>\n      <td>17.666667</td>\n      <td>24.0</td>\n      <td>21</td>\n    </tr>\n    <tr>\n      <th>T-Storm</th>\n      <td>16.035714</td>\n      <td>37.0</td>\n      <td>28</td>\n      <td>4.000000</td>\n      <td>4.0</td>\n      <td>28</td>\n      <td>984.009643</td>\n      <td>990.10</td>\n      <td>28</td>\n      <td>13.392857</td>\n      <td>24.0</td>\n      <td>28</td>\n      <td>1.196786</td>\n      <td>6.10</td>\n      <td>28</td>\n      <td>15.714286</td>\n      <td>37.0</td>\n      <td>28</td>\n    </tr>\n    <tr>\n      <th>Thunder</th>\n      <td>22.875000</td>\n      <td>31.0</td>\n      <td>8</td>\n      <td>38.000000</td>\n      <td>38.0</td>\n      <td>8</td>\n      <td>987.217500</td>\n      <td>990.10</td>\n      <td>8</td>\n      <td>11.000000</td>\n      <td>20.0</td>\n      <td>8</td>\n      <td>0.063750</td>\n      <td>0.51</td>\n      <td>8</td>\n      <td>22.875000</td>\n      <td>31.0</td>\n      <td>8</td>\n    </tr>\n    <tr>\n      <th>Thunder in the Vicinity</th>\n      <td>22.605263</td>\n      <td>42.0</td>\n      <td>38</td>\n      <td>39.894737</td>\n      <td>47.0</td>\n      <td>38</td>\n      <td>984.010000</td>\n      <td>990.10</td>\n      <td>38</td>\n      <td>13.657895</td>\n      <td>28.0</td>\n      <td>38</td>\n      <td>0.033421</td>\n      <td>0.51</td>\n      <td>38</td>\n      <td>22.473684</td>\n      <td>43.0</td>\n      <td>38</td>\n    </tr>\n    <tr>\n      <th>Widespread Dust</th>\n      <td>35.000000</td>\n      <td>38.0</td>\n      <td>7</td>\n      <td>19.000000</td>\n      <td>19.0</td>\n      <td>7</td>\n      <td>989.062857</td>\n      <td>989.77</td>\n      <td>7</td>\n      <td>14.000000</td>\n      <td>31.0</td>\n      <td>7</td>\n      <td>0.000000</td>\n      <td>0.00</td>\n      <td>7</td>\n      <td>32.285714</td>\n      <td>35.0</td>\n      <td>7</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
++     },
++     "execution_count": 20,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "weather_groups_agg = clean_weather_set.groupby(\"cloud_cover_description\").agg(['mean', 'max', 'count'])\n",
++    "weather_groups_agg"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:51.606459Z",
++     "end_time": "2023-05-16T21:35:51.687350Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 21,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\1578225388.py:1: FutureWarning: ['start_time', 'end_time', 'bike_id'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  metro_groups_agg_start = clean_metro_set.groupby(\"start_station_id\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "                 start_station_lat                   start_station_lon  \\\n                              mean        max  count              mean   \nstart_station_id                                                         \n3000                     34.025890  34.025890      2       -118.238220   \n3005                     34.048501  34.048550  57496       -118.258548   \n3006                     34.045540  34.045540  25942       -118.256668   \n3007                     34.050480  34.050480  20944       -118.254593   \n3008                     34.046612  34.046612  18008       -118.262733   \n...                            ...        ...    ...               ...   \n4631                     34.085770  34.085770      4       -118.382607   \n4632                     33.986671  33.986671    667       -118.440948   \n4633                     34.069981  34.069981    100       -118.260094   \n4634                     34.047390  34.047390    110       -118.219589   \n4638                     34.004650  34.004650     65       -118.255928   \n\n                                    end_station_id               \\\n                         max  count           mean   max  count   \nstart_station_id                                                  \n3000             -118.238220      2    3027.000000  3054      2   \n3005             -118.258530  57496    3197.358842  4634  57496   \n3006             -118.256660  25942    3164.346465  4587  25942   \n3007             -118.254590  20944    3165.227034  4627  20944   \n3008             -118.262730  18008    3222.440082  4627  18008   \n...                      ...    ...            ...   ...    ...   \n4631             -118.382607      4    4089.250000  4525      4   \n4632             -118.440948    667    4480.161919  4632    667   \n4633             -118.260094    100    3861.610000  4636    100   \n4634             -118.219589    110    3877.936364  4636    110   \n4638             -118.255928     65    4430.046154  4638     65   \n\n                 end_station_lat                   end_station_lon  \\\n                            mean        max  count            mean   \nstart_station_id                                                     \n3000                   34.032555  34.039219      2     -118.237354   \n3005                   34.046648  34.156181  57496     -118.255711   \n3006                   34.046349  34.145691  25942     -118.255120   \n3007                   34.047912  34.177650  20944     -118.254996   \n3008                   34.046341  34.154270  18008     -118.258573   \n...                          ...        ...    ...             ...   \n4631                   34.085927  34.100380      4     -118.296081   \n4632                   33.988754  34.094372    667     -118.442688   \n4633                   34.058931  34.094929    100     -118.250369   \n4634                   34.051260  34.090279    110     -118.239104   \n4638                   33.996084  34.046131     65     -118.269961   \n\n                                     \n                         max  count  \nstart_station_id                     \n3000             -118.236488      2  \n3005             -118.160170  57496  \n3006             -118.148230  25942  \n3007             -118.225410  20944  \n3008             -118.142151  18008  \n...                      ...    ...  \n4631             -118.261169      4  \n4632             -118.291718    667  \n4633             -118.219589    100  \n4634             -118.219589    110  \n4638             -118.248238     65  \n\n[392 rows x 15 columns]",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">start_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lon</th>\n      <th colspan=\"3\" halign=\"left\">end_station_id</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lon</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>start_station_id</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>3000</th>\n      <td>34.025890</td>\n      <td>34.025890</td>\n      <td>2</td>\n      <td>-118.238220</td>\n      <td>-118.238220</td>\n      <td>2</td>\n      <td>3027.000000</td>\n      <td>3054</td>\n      <td>2</td>\n      <td>34.032555</td>\n      <td>34.039219</td>\n      <td>2</td>\n      <td>-118.237354</td>\n      <td>-118.236488</td>\n      <td>2</td>\n    </tr>\n    <tr>\n      <th>3005</th>\n      <td>34.048501</td>\n      <td>34.048550</td>\n      <td>57496</td>\n      <td>-118.258548</td>\n      <td>-118.258530</td>\n      <td>57496</td>\n      <td>3197.358842</td>\n      <td>4634</td>\n      <td>57496</td>\n      <td>34.046648</td>\n      <td>34.156181</td>\n      <td>57496</td>\n      <td>-118.255711</td>\n      <td>-118.160170</td>\n      <td>57496</td>\n    </tr>\n    <tr>\n      <th>3006</th>\n      <td>34.045540</td>\n      <td>34.045540</td>\n      <td>25942</td>\n      <td>-118.256668</td>\n      <td>-118.256660</td>\n      <td>25942</td>\n      <td>3164.346465</td>\n      <td>4587</td>\n      <td>25942</td>\n      <td>34.046349</td>\n      <td>34.145691</td>\n      <td>25942</td>\n      <td>-118.255120</td>\n      <td>-118.148230</td>\n      <td>25942</td>\n    </tr>\n    <tr>\n      <th>3007</th>\n      <td>34.050480</td>\n      <td>34.050480</td>\n      <td>20944</td>\n      <td>-118.254593</td>\n      <td>-118.254590</td>\n      <td>20944</td>\n      <td>3165.227034</td>\n      <td>4627</td>\n      <td>20944</td>\n      <td>34.047912</td>\n      <td>34.177650</td>\n      <td>20944</td>\n      <td>-118.254996</td>\n      <td>-118.225410</td>\n      <td>20944</td>\n    </tr>\n    <tr>\n      <th>3008</th>\n      <td>34.046612</td>\n      <td>34.046612</td>\n      <td>18008</td>\n      <td>-118.262733</td>\n      <td>-118.262730</td>\n      <td>18008</td>\n      <td>3222.440082</td>\n      <td>4627</td>\n      <td>18008</td>\n      <td>34.046341</td>\n      <td>34.154270</td>\n      <td>18008</td>\n      <td>-118.258573</td>\n      <td>-118.142151</td>\n      <td>18008</td>\n    </tr>\n    <tr>\n      <th>...</th>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n    </tr>\n    <tr>\n      <th>4631</th>\n      <td>34.085770</td>\n      <td>34.085770</td>\n      <td>4</td>\n      <td>-118.382607</td>\n      <td>-118.382607</td>\n      <td>4</td>\n      <td>4089.250000</td>\n      <td>4525</td>\n      <td>4</td>\n      <td>34.085927</td>\n      <td>34.100380</td>\n      <td>4</td>\n      <td>-118.296081</td>\n      <td>-118.261169</td>\n      <td>4</td>\n    </tr>\n    <tr>\n      <th>4632</th>\n      <td>33.986671</td>\n      <td>33.986671</td>\n      <td>667</td>\n      <td>-118.440948</td>\n      <td>-118.440948</td>\n      <td>667</td>\n      <td>4480.161919</td>\n      <td>4632</td>\n      <td>667</td>\n      <td>33.988754</td>\n      <td>34.094372</td>\n      <td>667</td>\n      <td>-118.442688</td>\n      <td>-118.291718</td>\n      <td>667</td>\n    </tr>\n    <tr>\n      <th>4633</th>\n      <td>34.069981</td>\n      <td>34.069981</td>\n      <td>100</td>\n      <td>-118.260094</td>\n      <td>-118.260094</td>\n      <td>100</td>\n      <td>3861.610000</td>\n      <td>4636</td>\n      <td>100</td>\n      <td>34.058931</td>\n      <td>34.094929</td>\n      <td>100</td>\n      <td>-118.250369</td>\n      <td>-118.219589</td>\n      <td>100</td>\n    </tr>\n    <tr>\n      <th>4634</th>\n      <td>34.047390</td>\n      <td>34.047390</td>\n      <td>110</td>\n      <td>-118.219589</td>\n      <td>-118.219589</td>\n      <td>110</td>\n      <td>3877.936364</td>\n      <td>4636</td>\n      <td>110</td>\n      <td>34.051260</td>\n      <td>34.090279</td>\n      <td>110</td>\n      <td>-118.239104</td>\n      <td>-118.219589</td>\n      <td>110</td>\n    </tr>\n    <tr>\n      <th>4638</th>\n      <td>34.004650</td>\n      <td>34.004650</td>\n      <td>65</td>\n      <td>-118.255928</td>\n      <td>-118.255928</td>\n      <td>65</td>\n      <td>4430.046154</td>\n      <td>4638</td>\n      <td>65</td>\n      <td>33.996084</td>\n      <td>34.046131</td>\n      <td>65</td>\n      <td>-118.269961</td>\n      <td>-118.248238</td>\n      <td>65</td>\n    </tr>\n  </tbody>\n</table>\n<p>392 rows × 15 columns</p>\n</div>"
++     },
++     "execution_count": 21,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "metro_groups_agg_start = clean_metro_set.groupby(\"start_station_id\").agg(['mean', 'max', 'count'])\n",
++    "metro_groups_agg_start"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:51.653753Z",
++     "end_time": "2023-05-16T21:35:52.293849Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 22,
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "C:\\Users\\yusuf\\AppData\\Local\\Temp\\ipykernel_54372\\1209517537.py:1: FutureWarning: ['start_time', 'end_time', 'bike_id'] did not aggregate successfully. If any error is raised this will raise in a future version of pandas. Drop these columns/ops to avoid this warning.\n",
++      "  metro_groups_agg_end = clean_metro_set.groupby(\"end_station_id\").agg(['mean', 'max', 'count'])\n"
++     ]
++    },
++    {
++     "data": {
++      "text/plain": "               start_station_id              start_station_lat             \\\n                           mean   max  count              mean        max   \nend_station_id                                                              \n3000                3044.181818  3082     11         34.044029  34.056610   \n3005                3206.157391  4634  61992         34.047711  34.165218   \n3006                3150.935031  4587  26428         34.046050  34.147812   \n3007                3201.279150  4578  17324         34.049268  34.110031   \n3008                3211.372624  4627  18571         34.046390  34.149712   \n...                         ...   ...    ...               ...        ...   \n4635                4511.000000  4511      1         34.056278  34.056278   \n4636                4320.333333  4634      6         34.063447  34.082520   \n4638                4448.142857  4638     49         33.998086  34.051102   \n4639                4437.000000  4454      3         33.993052  34.017899   \n4640                4088.400000  4552     10         34.016294  34.085770   \n\n                      start_station_lon                    end_station_lat  \\\n                count              mean         max  count            mean   \nend_station_id                                                               \n3000               11       -118.241302 -118.231277     11       34.025890   \n3005            61992       -118.255778 -118.145042  61992       34.048501   \n3006            26428       -118.255310 -118.132210  26428       34.045540   \n3007            17324       -118.253995 -118.225410  17324       34.050480   \n3008            18571       -118.258398 -118.160170  18571       34.046612   \n...               ...               ...         ...    ...             ...   \n4635                1       -118.231773 -118.231773      1       34.025791   \n4636                6       -118.248828 -118.219589      6       34.025742   \n4638               49       -118.266307 -118.248238     49       34.004650   \n4639                3       -118.277225 -118.248238      3       33.943359   \n4640               10       -118.323093 -118.238320     10      -90.000000   \n\n                                 end_station_lon                     \n                      max  count            mean         max  count  \nend_station_id                                                       \n3000            34.025890     11     -118.238220 -118.238220     11  \n3005            34.048550  61992     -118.258550 -118.256668  61992  \n3006            34.045540  26428     -118.256675 -118.243530  26428  \n3007            34.050480  17324     -118.254593 -118.254590  17324  \n3008            34.046612  18571     -118.262733 -118.262730  18571  \n...                   ...    ...             ...         ...    ...  \n4635            34.025791      1     -118.238068 -118.238068      1  \n4636            34.025742      6     -118.238068 -118.238068      6  \n4638            34.004650     49     -118.255928 -118.255928     49  \n4639            33.943359      3     -118.248238 -118.248238      3  \n4640           -90.000000     10        0.000000    0.000000     10  \n\n[401 rows x 15 columns]",
++      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead tr th {\n        text-align: left;\n    }\n\n    .dataframe thead tr:last-of-type th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr>\n      <th></th>\n      <th colspan=\"3\" halign=\"left\">start_station_id</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">start_station_lon</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lat</th>\n      <th colspan=\"3\" halign=\"left\">end_station_lon</th>\n    </tr>\n    <tr>\n      <th></th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n      <th>mean</th>\n      <th>max</th>\n      <th>count</th>\n    </tr>\n    <tr>\n      <th>end_station_id</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>3000</th>\n      <td>3044.181818</td>\n      <td>3082</td>\n      <td>11</td>\n      <td>34.044029</td>\n      <td>34.056610</td>\n      <td>11</td>\n      <td>-118.241302</td>\n      <td>-118.231277</td>\n      <td>11</td>\n      <td>34.025890</td>\n      <td>34.025890</td>\n      <td>11</td>\n      <td>-118.238220</td>\n      <td>-118.238220</td>\n      <td>11</td>\n    </tr>\n    <tr>\n      <th>3005</th>\n      <td>3206.157391</td>\n      <td>4634</td>\n      <td>61992</td>\n      <td>34.047711</td>\n      <td>34.165218</td>\n      <td>61992</td>\n      <td>-118.255778</td>\n      <td>-118.145042</td>\n      <td>61992</td>\n      <td>34.048501</td>\n      <td>34.048550</td>\n      <td>61992</td>\n      <td>-118.258550</td>\n      <td>-118.256668</td>\n      <td>61992</td>\n    </tr>\n    <tr>\n      <th>3006</th>\n      <td>3150.935031</td>\n      <td>4587</td>\n      <td>26428</td>\n      <td>34.046050</td>\n      <td>34.147812</td>\n      <td>26428</td>\n      <td>-118.255310</td>\n      <td>-118.132210</td>\n      <td>26428</td>\n      <td>34.045540</td>\n      <td>34.045540</td>\n      <td>26428</td>\n      <td>-118.256675</td>\n      <td>-118.243530</td>\n      <td>26428</td>\n    </tr>\n    <tr>\n      <th>3007</th>\n      <td>3201.279150</td>\n      <td>4578</td>\n      <td>17324</td>\n      <td>34.049268</td>\n      <td>34.110031</td>\n      <td>17324</td>\n      <td>-118.253995</td>\n      <td>-118.225410</td>\n      <td>17324</td>\n      <td>34.050480</td>\n      <td>34.050480</td>\n      <td>17324</td>\n      <td>-118.254593</td>\n      <td>-118.254590</td>\n      <td>17324</td>\n    </tr>\n    <tr>\n      <th>3008</th>\n      <td>3211.372624</td>\n      <td>4627</td>\n      <td>18571</td>\n      <td>34.046390</td>\n      <td>34.149712</td>\n      <td>18571</td>\n      <td>-118.258398</td>\n      <td>-118.160170</td>\n      <td>18571</td>\n      <td>34.046612</td>\n      <td>34.046612</td>\n      <td>18571</td>\n      <td>-118.262733</td>\n      <td>-118.262730</td>\n      <td>18571</td>\n    </tr>\n    <tr>\n      <th>...</th>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n      <td>...</td>\n    </tr>\n    <tr>\n      <th>4635</th>\n      <td>4511.000000</td>\n      <td>4511</td>\n      <td>1</td>\n      <td>34.056278</td>\n      <td>34.056278</td>\n      <td>1</td>\n      <td>-118.231773</td>\n      <td>-118.231773</td>\n      <td>1</td>\n      <td>34.025791</td>\n      <td>34.025791</td>\n      <td>1</td>\n      <td>-118.238068</td>\n      <td>-118.238068</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <th>4636</th>\n      <td>4320.333333</td>\n      <td>4634</td>\n      <td>6</td>\n      <td>34.063447</td>\n      <td>34.082520</td>\n      <td>6</td>\n      <td>-118.248828</td>\n      <td>-118.219589</td>\n      <td>6</td>\n      <td>34.025742</td>\n      <td>34.025742</td>\n      <td>6</td>\n      <td>-118.238068</td>\n      <td>-118.238068</td>\n      <td>6</td>\n    </tr>\n    <tr>\n      <th>4638</th>\n      <td>4448.142857</td>\n      <td>4638</td>\n      <td>49</td>\n      <td>33.998086</td>\n      <td>34.051102</td>\n      <td>49</td>\n      <td>-118.266307</td>\n      <td>-118.248238</td>\n      <td>49</td>\n      <td>34.004650</td>\n      <td>34.004650</td>\n      <td>49</td>\n      <td>-118.255928</td>\n      <td>-118.255928</td>\n      <td>49</td>\n    </tr>\n    <tr>\n      <th>4639</th>\n      <td>4437.000000</td>\n      <td>4454</td>\n      <td>3</td>\n      <td>33.993052</td>\n      <td>34.017899</td>\n      <td>3</td>\n      <td>-118.277225</td>\n      <td>-118.248238</td>\n      <td>3</td>\n      <td>33.943359</td>\n      <td>33.943359</td>\n      <td>3</td>\n      <td>-118.248238</td>\n      <td>-118.248238</td>\n      <td>3</td>\n    </tr>\n    <tr>\n      <th>4640</th>\n      <td>4088.400000</td>\n      <td>4552</td>\n      <td>10</td>\n      <td>34.016294</td>\n      <td>34.085770</td>\n      <td>10</td>\n      <td>-118.323093</td>\n      <td>-118.238320</td>\n      <td>10</td>\n      <td>-90.000000</td>\n      <td>-90.000000</td>\n      <td>10</td>\n      <td>0.000000</td>\n      <td>0.000000</td>\n      <td>10</td>\n    </tr>\n  </tbody>\n</table>\n<p>401 rows × 15 columns</p>\n</div>"
++     },
++     "execution_count": 22,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "metro_groups_agg_end = clean_metro_set.groupby(\"end_station_id\").agg(['mean', 'max', 'count'])\n",
++    "metro_groups_agg_end"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:52.293849Z",
++     "end_time": "2023-05-16T21:35:52.939709Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 23,
++   "outputs": [],
++   "source": [
++    "import matplotlib as mpl\n",
++    "import matplotlib.pyplot as plt\n",
++    "import seaborn as sns\n",
++    "%matplotlib inline"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:35:52.939709Z",
++     "end_time": "2023-05-16T21:35:52.955346Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 34,
++   "outputs": [],
++   "source": [
++    "sns.pairplot(clean_weather_set, palette=\"magma\", height=3, hue=\"cloud_cover_description\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:56:10.416109Z",
++     "end_time": "2023-05-16T21:56:12.217172Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 35,
++   "outputs": [],
++   "source": [
++    "weather_set = pd.read_csv(\"CSV/Weather_LosAngeles_copy.csv\", sep=\",\")\n",
++    "\n",
++    "weather_set['timestamp'] = pd.to_datetime(weather_set['timestamp'])\n",
++    "\n",
++    "\n",
++    "mean_values_by_day = weather_set.groupby(weather_set[\"timestamp\"].dt.date).mean(numeric_only=True).round(1)\n",
++    "\n",
++    "for col in mean_values_by_day.columns:\n",
++    "    weather_set[col] = weather_set.apply(\n",
++    "        lambda row: mean_values_by_day.loc[row['timestamp'].date(), col]\n",
++    "        if pd.isnull(row[col]) else row[col],\n",
++    "        axis=1\n",
++    "    )\n",
++    "\n",
++    "weather_set['cloud_cover_description'].fillna(method='ffill', inplace=True)\n",
++    "weather_set.to_csv('CSV/Final_Weather_Set.csv', index=False)\n",
++    "weather_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:56:14.519980Z",
++     "end_time": "2023-05-16T21:56:15.167978Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 41,
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "<class 'pandas.core.frame.DataFrame'>\n",
++      "Int64Index: 1552782 entries, 0 to 1552781\n",
++      "Data columns (total 14 columns):\n",
++      " #   Column                  Non-Null Count    Dtype  \n",
++      "---  ------                  --------------    -----  \n",
++      " 0   Unnamed: 0              1552782 non-null  int64  \n",
++      " 1   start_time              1552782 non-null  object \n",
++      " 2   end_time                1552782 non-null  object \n",
++      " 3   start_station_id        1552782 non-null  int64  \n",
++      " 4   start_station_lat       1552782 non-null  float64\n",
++      " 5   start_station_lon       1552782 non-null  float64\n",
++      " 6   end_station_id          1552782 non-null  int64  \n",
++      " 7   end_station_lat         1552782 non-null  float64\n",
++      " 8   end_station_lon         1552782 non-null  float64\n",
++      " 9   bike_id                 1552782 non-null  object \n",
++      " 10  start_station_lat_mode  1552782 non-null  float64\n",
++      " 11  start_station_lon_mode  1552782 non-null  float64\n",
++      " 12  end_station_lat_mode    1552782 non-null  float64\n",
++      " 13  end_station_lon_mode    1552782 non-null  float64\n",
++      "dtypes: float64(8), int64(3), object(3)\n",
++      "memory usage: 177.7+ MB\n"
++     ]
++    }
++   ],
++   "source": [],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:59:48.176957Z",
++     "end_time": "2023-05-16T21:59:50.119155Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 42,
++   "outputs": [],
++   "source": [
++    "bike_set = pd.read_csv(\"CSV/metro_2017_2022_copy.csv\", sep=\",\")\n",
++    "#date7 = pd.to_datetime(\"07.05.2019\",format=\"%d.%m.%Y\")\n",
++    "#bike_set['start_time'] = pd.to_datetime(bike_set['start_time'], format=\"%H/%M/%S %d-%m-%Y\") #13/37/00 01-09-2021\n",
++    "#bike_set['start_time'] = pd.to_datetime(bike_set['start_time'], infer_datetime_format=True)\n",
++    "#bike_set['end_time'] = pd.to_datetime(bike_set['end_time'])\n",
++    "bike_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T22:00:08.291877Z",
++     "end_time": "2023-05-16T22:03:47.048339Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 45,
++   "outputs": [],
++   "source": [
++    "bike_set.sort_values()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T22:05:54.144900Z",
++     "end_time": "2023-05-16T22:06:00.764481Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 31,
++   "outputs": [],
++   "source": [
++    "# Group the dataframe by start station ID\n",
++    "grouped_start = bike_set.groupby('start_station_id', group_keys=False)\n",
++    "\n",
++    "# Fill missing start station latitudes with the corresponding value for that station\n",
++    "bike_set['start_station_lat'] = grouped_start['start_station_lat'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Fill missing start station longitudes with the corresponding value for that station\n",
++    "bike_set['start_station_lon'] = grouped_start['start_station_lon'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Group the dataframe by end station ID\n",
++    "grouped_end = bike_set.groupby('end_station_id', group_keys=False)\n",
++    "\n",
++    "# Fill missing end station latitudes with the corresponding value for that station\n",
++    "bike_set['end_station_lat'] = grouped_end['end_station_lat'].apply(lambda x: x.fillna(x.mean()))\n",
++    "\n",
++    "# Fill missing end station longitudes with the corresponding value for that station\n",
++    "bike_set['end_station_lon'] = grouped_end['end_station_lon'].apply(lambda x: x.fillna(x.mean()))\n",
++    "bike_set.info()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:50:30.052625Z",
++     "end_time": "2023-05-16T21:52:41.908101Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 32,
++   "outputs": [],
++   "source": [
++    "print(bike_set[['start_station_id', 'end_station_id', 'start_station_lat', 'start_station_lon', 'end_station_lat', 'end_station_lon']].isnull().sum())"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:52:41.908101Z",
++     "end_time": "2023-05-16T21:52:48.419147Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# create a dictionary of station_id: (lat, lon) pairs\n",
++    "station_info = {}\n",
++    "for i, row in bike_set.iterrows():\n",
++    "    start_id = row['start_station_id']\n",
++    "    start_lat = row['start_station_lat']\n",
++    "    start_lon = row['start_station_lon']\n",
++    "    end_id = row['end_station_id']\n",
++    "    end_lat = row['end_station_lat']\n",
++    "    end_lon = row['end_station_lon']\n",
++    "\n",
++    "    # add start station info to dictionary\n",
++    "    if pd.notna(start_lat) and pd.notna(start_lon):\n",
++    "        station_info[start_id] = (start_lat, start_lon)\n",
++    "    else:\n",
++    "        if start_id not in station_info:\n",
++    "            station_info[start_id] = None\n",
++    "\n",
++    "    # add end station info to dictionary\n",
++    "    if pd.notna(end_lat) and pd.notna(end_lon):\n",
++    "        station_info[end_id] = (end_lat, end_lon)\n",
++    "    else:\n",
++    "        if end_id not in station_info:\n",
++    "            station_info[end_id] = None\n",
++    "\n",
++    "# fill in missing values using the dictionary\n",
++    "bike_set['start_station_lat'] = bike_set['start_station_lat'].fillna(bike_set['start_station_id'].map(lambda x: station_info[x][0] if station_info[x] is not None else None))\n",
++    "bike_set['start_station_lon'] = bike_set['start_station_lon'].fillna(bike_set['start_station_id'].map(lambda x: station_info[x][1] if station_info[x] is not None else None))\n",
++    "bike_set['end_station_lat'] = bike_set['end_station_lat'].fillna(bike_set['end_station_id'].map(lambda x: station_info[x][0] if station_info[x] is not None else None))\n",
++    "bike_set['end_station_lon'] = bike_set['end_station_lon'].fillna(bike_set['end_station_id'].map(lambda x: station_info[x][1] if station_info[x] is not None else None))\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T18:56:40.423193Z",
++     "end_time": "2023-05-16T18:57:33.960131Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "print(bike_set[['start_station_id', 'end_station_id', 'start_station_lat', 'start_station_lon', 'end_station_lat', 'end_station_lon']].isnull().sum())\n",
++    "print(\"Unique station IDs in bike_set:\", len(bike_set['start_station_id'].unique()))\n",
++    "print(\"Unique station IDs in station_info:\", len(bike_set['end_station_id'].unique()))\n",
++    "bike_set.info()\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:49:25.160171Z",
++     "end_time": "2023-05-16T20:49:25.582334Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "#Sort by Start Startion ID and forward fill\n",
++    "bike_set.sort_values(\"start_station_id\")\n",
++    "bike_set[\"start_station_lat\"].fillna(method=\"ffill\", inplace=True)\n",
++    "bike_set[\"start_station_lon\"].fillna(method=\"ffill\", inplace=True)\n",
++    "#Sort by End Startion ID and forward fill\n",
++    "\n",
++    "bike_set.sort_values(\"end_station_id\")\n",
++    "bike_set[\"end_station_lat\"].fillna(method=\"ffill\", inplace=True)\n",
++    "bike_set[\"end_station_lon\"].fillna(method=\"ffill\", inplace=True)"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:00:31.301086Z",
++     "end_time": "2023-05-16T20:00:32.026617Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "stid0 = bike_set.loc[0,'start_station_id']\n",
++    "start_lat0 = bike_set.loc[0, 'start_station_lat']\n",
++    "start_lon0 = bike_set.loc[0, 'start_station_lon']\n",
++    "for i, row in bike_set.iterrows():\n",
++    "    stid1 = row['start_station_id']\n",
++    "    start_lat1 = row['start_station_lat']\n",
++    "    start_lon1 = row['start_station_lon']\n",
++    "    if stid1 == stid0:\n",
++    "        if start_lat1 != start_lat0:\n",
++    "            bike_set.at[i, 'start_station_lat'] = start_lat0\n",
++    "        if start_lon1 != start_lon0:\n",
++    "            bike_set.at[i, 'start_station_lon'] = start_lon0\n",
++    "\n",
++    "    stid0 = stid1\n",
++    "    start_lat0 = start_lat1\n",
++    "    start_lon0 = start_lon1"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:18:21.703740Z",
++     "end_time": "2023-05-16T20:19:08.114372Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "bike_set.to_csv(\"CSV/biketest1.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:19:57.414072Z",
++     "end_time": "2023-05-16T20:20:06.340877Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "bike_set['sdeltaLat'] = bike_set['start_station_lat'].shift(periods=1)\n",
++    "bike_set['sdeltaLon'] = bike_set['start_station_lon'].shift(periods=1)\n",
++    "bike_set['edeltaLat'] = bike_set['end_station_lat'].shift(periods=1)\n",
++    "bike_set['edeltaLon'] = bike_set['end_station_lon'].shift(periods=1)\n",
++    "\n",
++    "bike_set.head()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:13:43.438398Z",
++     "end_time": "2023-05-16T20:13:43.485312Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "\n"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
+    "cell_type": "code",
+    "execution_count": null,
+    "outputs": [],
+    "source": [
+-    "import pandas as pd\n",
+-    "metro_set = pd.read_csv(\"../Data_Cleanup/outCSV/Metro.csv\", )"
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')['start_station_lat', 'start_station_lon'].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "print(bike_set_agg_start)\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:41:42.460056Z",
++     "end_time": "2023-05-16T20:41:42.645357Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')[['start_station_lat', 'start_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "print(bike_set_agg_start)\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:41:51.395823Z",
++     "end_time": "2023-05-16T20:41:51.585557Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'start_station_id' and calculate the mode for 'start_station_lat' and 'start_station_lon'\n",
++    "bike_set_agg_start = bike_set.groupby('start_station_id')[['start_station_lat', 'start_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Merge the mode values with the original dataframe based on 'start_station_id'\n",
++    "bike_set_merged = bike_set.merge(bike_set_agg_start, on='start_station_id', suffixes=('', '_mode'))\n",
++    "\n",
++    "# Replace inconsistent cells with mode values\n",
++    "bike_set_merged['start_station_lat'] = bike_set_merged['start_station_lat'].fillna(bike_set_merged['start_station_lat_mode'])\n",
++    "bike_set_merged['start_station_lon'] = bike_set_merged['start_station_lon'].fillna(bike_set_merged['start_station_lon_mode'])\n",
++    "\n",
++    "# Drop the mode-related columns if needed\n",
++    "bike_set_merged = bike_set_merged.drop([ 'sdeltaLon', 'sdeltaLat', 'edeltaLat', 'edeltaLon'], axis=1)\n",
++    "\n",
++    "# Print the resulting dataframe\n",
++    "bike_set_merged.head()"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:07:16.562434Z",
++     "end_time": "2023-05-16T21:07:17.278799Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "for i, row in bike_set_merged.iterrows():\n",
++    "    bike_set_merged.at[i, 'start_station_lat'] = bike_set_merged.loc[i, 'start_station_lat_mode']\n",
++    "    bike_set_merged.at[i, 'start_station_lon'] = bike_set_merged.loc[i, 'start_station_lon_mode']\n",
++    "\n",
++    "\n",
++    "bike_set_merged.to_csv(\"CSV/biketest4.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:13:53.709976Z",
++     "end_time": "2023-05-16T21:16:17.972155Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "# Group the data by 'end_station_id' and calculate the mode for 'end_station_lat' and 'end_station_lon'\n",
++    "bike_set_agg_end = bike_set.groupby('end_station_id')[['end_station_lat', 'end_station_lon']].agg(lambda x: x.mode().iloc[0])\n",
++    "\n",
++    "# Merge the mode values with the original dataframe based on 'end_station_id'\n",
++    "bike_set_merged = bike_set.merge(bike_set_agg_end, on='end_station_id', suffixes=('', '_mode'))\n",
++    "\n",
++    "# Replace inconsistent cells with mode values\n",
++    "bike_set_merged['end_station_lat'] = bike_set_merged['end_station_lat'].fillna(bike_set_merged['end_station_lat_mode'])\n",
++    "bike_set_merged['end_station_lon'] = bike_set_merged['end_station_lon'].fillna(bike_set_merged['end_station_lon_mode'])\n",
++    "\n",
++    "# Drop the mode-related columns if needed\n",
++    "\n",
++    "\n",
++    "for i, row in bike_set_merged.iterrows():\n",
++    "    bike_set_merged.at[i, 'end_station_lat'] = bike_set_merged.loc[i, 'end_station_lat_mode']\n",
++    "    bike_set_merged.at[i, 'end_station_lon'] = bike_set_merged.loc[i, 'end_station_lon_mode']\n",
++    "\n",
++    "\n",
++    "bike_set_merged.to_csv(\"CSV/biketest5.csv\")"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T21:19:15.737860Z",
++     "end_time": "2023-05-16T21:21:36.037714Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "print(\"Unique station IDs in bike_set:\", len(bike_set_merged['start_station_id'].unique()))\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-16T20:56:42.496850Z",
++     "end_time": "2023-05-16T20:56:42.576433Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 25,
++   "outputs": [
++    {
++     "ename": "NameError",
++     "evalue": "name 'bike_set_merged' is not defined",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mNameError\u001B[0m                                 Traceback (most recent call last)",
++      "Cell \u001B[1;32mIn[25], line 1\u001B[0m\n\u001B[1;32m----> 1\u001B[0m clean_metro_sett \u001B[38;5;241m=\u001B[39m \u001B[43mbike_set_merged\u001B[49m\u001B[38;5;241m.\u001B[39mdrop([\u001B[38;5;124m'\u001B[39m\u001B[38;5;124mend_station_lat_mode\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124mend_station_lon_mode\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124msdeltaLon\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124msdeltaLat\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124medeltaLat\u001B[39m\u001B[38;5;124m'\u001B[39m, \u001B[38;5;124m'\u001B[39m\u001B[38;5;124medeltaLon\u001B[39m\u001B[38;5;124m'\u001B[39m], axis\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m1\u001B[39m)\n\u001B[0;32m      2\u001B[0m clean_metro_sett\u001B[38;5;241m.\u001B[39mto_csv(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mCSV/CleanMetroSet.csv\u001B[39m\u001B[38;5;124m\"\u001B[39m)\n",
++      "\u001B[1;31mNameError\u001B[0m: name 'bike_set_merged' is not defined"
++     ]
++    }
++   ],
++   "source": [
++    "clean_set = bike_set_merged.drop([ 'sdeltaLon', 'sdeltaLat', 'edeltaLat', 'edeltaLon'], axis=1)"
+    ],
+    "metadata": {
+     "collapsed": false

@@ -1,0 +1,1027 @@
+Index: Idle_Time/IdleeeeeeTimeeeee.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Idle_Time/IdleeeeeeTimeeeee.ipynb b/Idle_Time/IdleeeeeeTimeeeee.ipynb
+new file mode 100644
+--- /dev/null	(date 1689160293517)
++++ b/Idle_Time/IdleeeeeeTimeeeee.ipynb	(date 1689160293517)
+@@ -0,0 +1,432 @@
++{
++ "cells": [
++  {
++   "attachments": {},
++   "cell_type": "markdown",
++   "id": "c0485775",
++   "metadata": {},
++   "source": [
++    "-csv datei einlesen\n",
++    "-Name ändern\n",
++    "- 1sten 5 zeilen ausgeben"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 1,
++   "id": "4ac59096",
++   "metadata": {
++    "ExecuteTime": {
++     "start_time": "2023-06-02T21:08:26.545223Z",
++     "end_time": "2023-06-02T21:08:31.007667Z"
++    }
++   },
++   "outputs": [
++    {
++     "data": {
++      "text/plain": "start_time           datetime64[ns]\nend_time             datetime64[ns]\nstart_station_id              int64\nstart_station_lat           float64\nstart_station_lon           float64\nend_station_id                int64\nend_station_lat             float64\nend_station_lon             float64\nbike_id                      object\ndtype: object"
++     },
++     "execution_count": 1,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "import pandas as pd\n",
++    "from datetime import datetime, timedelta\n",
++    "csv_file = '../Data_Cleanup/outCSV/Clean_Metro_Set.csv'\n",
++    "metro = pd.read_csv(csv_file, parse_dates= ['start_time','end_time'], low_memory=False, index_col= 0)\n",
++    "metro.dtypes\n",
++    "metro[1232]"
++   ]
++  },
++  {
++   "attachments": {},
++   "cell_type": "markdown",
++   "id": "45891a32",
++   "metadata": {},
++   "source": [
++    "#### Sort Table by Transaction Time\n",
++    "Now we are going"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 3,
++   "id": "e0d2b80e",
++   "metadata": {
++    "ExecuteTime": {
++     "start_time": "2023-05-31T22:38:52.264800Z",
++     "end_time": "2023-05-31T22:38:52.612779Z"
++    }
++   },
++   "outputs": [
++    {
++     "data": {
++      "text/plain": "start_time           datetime64[ns]\nend_time             datetime64[ns]\nstart_station_id              int64\nstart_station_lat           float64\nstart_station_lon           float64\nend_station_id                int64\nend_station_lat             float64\nend_station_lon             float64\nbike_id                      object\ndtype: object"
++     },
++     "execution_count": 3,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "#metro['start_time'] = pd.to_datetime(metro['start_time'])\n",
++    "#\n",
++    "#metro ['end_time'] = pd.to_datetime(metro['end_time'])#\n",
++    "#\n",
++    "#metro = metro.sort_values(by='start_time')\n",
++    "#metro.dtypes"
++   ]
++  },
++  {
++   "attachments": {},
++   "cell_type": "markdown",
++   "id": "6de58174",
++   "metadata": {},
++   "source": [
++    "-Neue Spalte hinzufügen für Idle_Time\n",
++    "-Alle neuen felder mit \"None\" initialisieren, da alle nicht belegte Idle Time Zellen keinen Einfluss später in der durchschnittlichen Idle Time Berechnung haben sollten.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 20,
++   "id": "df1625c9",
++   "metadata": {
++    "ExecuteTime": {
++     "start_time": "2023-06-02T22:31:11.731787Z",
++     "end_time": "2023-06-02T22:31:11.933060Z"
++    }
++   },
++   "outputs": [],
++   "source": [
++    "metro['idle_time'] = None\n",
++    "metro = metro.sort_values(by='end_time')"
++   ]
++  },
++  {
++   "attachments": {},
++   "cell_type": "markdown",
++   "id": "f200ac5d",
++   "metadata": {},
++   "source": [
++    "Idle Time berechnung"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "source": [
++    "Erklärung des folgenden Codes:\n",
++    "\n",
++    "Die Berechnung der Idle Time basiert auf der Überprüfung der Startzeit (current_start_time) im Vergleich zur Endzeit (stored end time) des vorherigen Vorgangs mit der gleichen Startstation (current_start_station_id).\n",
++    "\n",
++    "Der Algorithmus durchläuft die Datenzeilen des DataFrames und speichert die Endzeiten (current_end_time) für jede Endstation (current_end_station_id) in einem Dictionary namens BigDict.\n",
++    "\n",
++    "Für jede Zeile wird überprüft, ob die aktuelle Startzeit größer ist als die gespeicherte Endzeit für die Startstation. Wenn dies der Fall ist, bedeutet dies, dass zwischen den Vorgängen mit der gleichen Startstation eine Leerlaufzeit aufgetreten ist. Die Leerlaufzeit wird berechnet, indem die Startzeit von der gespeicherten Endzeit subtrahiert wird. Das Ergebnis wird dann in der Spalte \"idle_time\" der entsprechenden Zeile des DataFrames gespeichert.\n",
++    "\n",
++    "Um die Endzeit für eine Startstation abzurufen, wird das Dictionary BigDict verwendet. Wenn eine Startstation zum ersten Mal auftritt und keine gespeicherte Endzeit vorhanden ist, wird ein KeyError ausgelöst. In diesem Fall wird die aktuelle Endzeit für die aktuelle Endstation dem BigDict hinzugefügt.\n",
++    "\n",
++    "Durch dieses Verfahren wird für jede Zeile im DataFrame die Leerlaufzeit berechnet, sofern eine vorherige Operation mit derselben Startstation vorhanden ist. Dadurch können Informationen über Leerlaufzeiten zwischen aufeinanderfolgenden Vorgängen mit derselben Startstation erfasst und im DataFrame gespeichert werden."
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 6,
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-06-02T21:34:13.100741Z",
++     "end_time": "2023-06-02T21:35:40.042159Z"
++    }
++   },
++   "outputs": [],
++   "source": [
++    "BigDict = {\n",
++    "    # station_id: {\n",
++    "    #     bike_id: [transaction_id ,end_time, false]\n",
++    "    # }\n",
++    "}\n",
++    "\n",
++    "for i, row in metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_bike_id = row[\"bike_id\"]\n",
++    "    current_index = i\n",
++    "\n",
++    "    if current_start_station_id in BigDict: # true\n",
++    "        for bike in BigDict[current_start_station_id]:\n",
++    "            idle_time = current_start_time - BigDict[current_start_station_id][bike][1]\n",
++    "            metro.at[BigDict[current_start_station_id][bike][0], \"idle_time\"] = idle_time\n",
++    "\n",
++    "        del BigDict[current_start_station_id]\n",
++    "    else:\n",
++    "        pass\n",
++    "\n",
++    "    if current_end_station_id not in BigDict:\n",
++    "        BigDict[current_end_station_id] = {current_bike_id : (current_index, current_end_time)}\n",
++    "\n",
++    "    BigDict[current_end_station_id][current_bike_id] = (current_index, current_end_time)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 10,
++   "outputs": [
++    {
++     "ename": "KeyboardInterrupt",
++     "evalue": "",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mKeyboardInterrupt\u001B[0m                         Traceback (most recent call last)",
++      "Cell \u001B[1;32mIn[10], line 12\u001B[0m\n\u001B[0;32m     10\u001B[0m \u001B[38;5;28;01melse\u001B[39;00m:\n\u001B[0;32m     11\u001B[0m     \u001B[38;5;28;01mfor\u001B[39;00m j \u001B[38;5;129;01min\u001B[39;00m \u001B[38;5;28mrange\u001B[39m(i, \u001B[38;5;28mlen\u001B[39m(metro)):\n\u001B[1;32m---> 12\u001B[0m         next_start_time \u001B[38;5;241m=\u001B[39m \u001B[43mmetro\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mloc\u001B[49m\u001B[43m[\u001B[49m\u001B[43mj\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[38;5;124;43m\"\u001B[39;49m\u001B[38;5;124;43mstart_time\u001B[39;49m\u001B[38;5;124;43m\"\u001B[39;49m\u001B[43m]\u001B[49m\n\u001B[0;32m     13\u001B[0m         next_start_station_id \u001B[38;5;241m=\u001B[39m metro\u001B[38;5;241m.\u001B[39mloc[j, \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mstart_station_id\u001B[39m\u001B[38;5;124m\"\u001B[39m]\n\u001B[0;32m     14\u001B[0m         \u001B[38;5;28;01mif\u001B[39;00m next_start_time \u001B[38;5;241m<\u001B[39m current_end_time \u001B[38;5;129;01mor\u001B[39;00m next_start_station_id \u001B[38;5;241m!=\u001B[39m current_end_station_id:\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexing.py:1066\u001B[0m, in \u001B[0;36m_LocationIndexer.__getitem__\u001B[1;34m(self, key)\u001B[0m\n\u001B[0;32m   1064\u001B[0m     key \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mtuple\u001B[39m(com\u001B[38;5;241m.\u001B[39mapply_if_callable(x, \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mobj) \u001B[38;5;28;01mfor\u001B[39;00m x \u001B[38;5;129;01min\u001B[39;00m key)\n\u001B[0;32m   1065\u001B[0m     \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_is_scalar_access(key):\n\u001B[1;32m-> 1066\u001B[0m         \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mobj\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_get_value\u001B[49m\u001B[43m(\u001B[49m\u001B[38;5;241;43m*\u001B[39;49m\u001B[43mkey\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mtakeable\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_takeable\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   1067\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_getitem_tuple(key)\n\u001B[0;32m   1068\u001B[0m \u001B[38;5;28;01melse\u001B[39;00m:\n\u001B[0;32m   1069\u001B[0m     \u001B[38;5;66;03m# we by definition only have the 0th axis\u001B[39;00m\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\frame.py:3924\u001B[0m, in \u001B[0;36mDataFrame._get_value\u001B[1;34m(self, index, col, takeable)\u001B[0m\n\u001B[0;32m   3918\u001B[0m engine \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mindex\u001B[38;5;241m.\u001B[39m_engine\n\u001B[0;32m   3920\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;129;01mnot\u001B[39;00m \u001B[38;5;28misinstance\u001B[39m(\u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mindex, MultiIndex):\n\u001B[0;32m   3921\u001B[0m     \u001B[38;5;66;03m# CategoricalIndex: Trying to use the engine fastpath may give incorrect\u001B[39;00m\n\u001B[0;32m   3922\u001B[0m     \u001B[38;5;66;03m#  results if our categories are integers that dont match our codes\u001B[39;00m\n\u001B[0;32m   3923\u001B[0m     \u001B[38;5;66;03m# IntervalIndex: IntervalTree has no get_loc\u001B[39;00m\n\u001B[1;32m-> 3924\u001B[0m     row \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mindex\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mget_loc\u001B[49m\u001B[43m(\u001B[49m\u001B[43mindex\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   3925\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m series\u001B[38;5;241m.\u001B[39m_values[row]\n\u001B[0;32m   3927\u001B[0m \u001B[38;5;66;03m# For MultiIndex going through engine effectively restricts us to\u001B[39;00m\n\u001B[0;32m   3928\u001B[0m \u001B[38;5;66;03m#  same-length tuples; see test_get_set_value_no_partial_indexing\u001B[39;00m\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexes\\base.py:3802\u001B[0m, in \u001B[0;36mIndex.get_loc\u001B[1;34m(self, key, method, tolerance)\u001B[0m\n\u001B[0;32m   3800\u001B[0m casted_key \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_maybe_cast_indexer(key)\n\u001B[0;32m   3801\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m-> 3802\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_engine\u001B[38;5;241m.\u001B[39mget_loc(casted_key)\n\u001B[0;32m   3803\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m \u001B[38;5;167;01mKeyError\u001B[39;00m \u001B[38;5;28;01mas\u001B[39;00m err:\n\u001B[0;32m   3804\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mKeyError\u001B[39;00m(key) \u001B[38;5;28;01mfrom\u001B[39;00m \u001B[38;5;21;01merr\u001B[39;00m\n",
++      "\u001B[1;31mKeyboardInterrupt\u001B[0m: "
++     ]
++    }
++   ],
++   "source": [
++    "for i, row in  metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_idle_time = row[\"idle_time\"]\n",
++    "\n",
++    "    if current_idle_time.total_seconds() >= 0:\n",
++    "        continue\n",
++    "    else:\n",
++    "        for j in range(i, len(metro)):\n",
++    "            next_start_time = metro.loc[j, \"start_time\"]\n",
++    "            next_start_station_id = metro.loc[j, \"start_station_id\"]\n",
++    "            if next_start_time < current_end_time or next_start_station_id != current_end_station_id:\n",
++    "                continue\n",
++    "            else:\n",
++    "                metro.at[i, \"idle_time\"] = next_start_time - current_end_time"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 22,
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-06-02T22:33:11.108334Z",
++     "end_time": "2023-06-02T22:33:24.952460Z"
++    }
++   },
++   "outputs": [],
++   "source": [
++    "metro.to_csv('../Data_Cleanup/outCSV/IdleTest2.csv')"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 5,
++   "outputs": [],
++   "source": [
++    "BigDict = {}\n",
++    "for i, row in  metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_idle_time = row[\"idle_time\"]\n",
++    "\n",
++    "    if current_idle_time.total_seconds() >= 0:\n",
++    "        continue\n",
++    "    else:\n",
++    "        if current_start_station_id in BigDict:\n",
++    "            for bike in BigDict[current_start_station_id]:\n",
++    "                idle_time = current_start_time - BigDict[current_start_station_id][bike][1]\n",
++    "            metro.at[BigDict[current_start_station_id][bike][0], \"idle_time\"] = idle_time"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-05-31T17:53:09.022565Z",
++     "end_time": "2023-05-31T17:53:09.037093Z"
++    }
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 16,
++   "outputs": [
++    {
++     "ename": "RuntimeError",
++     "evalue": "dictionary changed size during iteration",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mRuntimeError\u001B[0m                              Traceback (most recent call last)",
++      "Cell \u001B[1;32mIn[16], line 23\u001B[0m\n\u001B[0;32m     21\u001B[0m     metro\u001B[38;5;241m.\u001B[39mat[BigDict[current_start_station_id][bike][\u001B[38;5;241m0\u001B[39m], \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124midle_time\u001B[39m\u001B[38;5;124m\"\u001B[39m] \u001B[38;5;241m=\u001B[39m idle_time\n\u001B[0;32m     22\u001B[0m temp \u001B[38;5;241m=\u001B[39m BigDict[current_start_station_id]\n\u001B[1;32m---> 23\u001B[0m \u001B[38;5;28;01mfor\u001B[39;00m bike \u001B[38;5;129;01min\u001B[39;00m BigDict[current_start_station_id]:\n\u001B[0;32m     24\u001B[0m     \u001B[38;5;28;01mif\u001B[39;00m BigDict[current_start_station_id][bike][\u001B[38;5;241m2\u001B[39m]:\n\u001B[0;32m     25\u001B[0m         \u001B[38;5;28;01mdel\u001B[39;00m temp[bike]\n",
++      "\u001B[1;31mRuntimeError\u001B[0m: dictionary changed size during iteration"
++     ]
++    }
++   ],
++   "source": [
++    "BigDict = {\n",
++    "    # station_id: {\n",
++    "    #     bike_id: (transaction_id ,end_time)\n",
++    "    # }\n",
++    "}\n",
++    "\n",
++    "for i, row in metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_bike_id = row[\"bike_id\"]\n",
++    "    current_index = i\n",
++    "\n",
++    "    if current_start_station_id in BigDict: # true\n",
++    "        for bike in BigDict[current_start_station_id]:\n",
++    "            idle_time = current_start_time - BigDict[current_start_station_id][bike][1]\n",
++    "            if idle_time.total_seconds() < 0:\n",
++    "                BigDict[current_start_station_id][bike][2] = False\n",
++    "            metro.at[BigDict[current_start_station_id][bike][0], \"idle_time\"] = idle_time\n",
++    "        temp = BigDict[current_start_station_id]\n",
++    "        for bike in BigDict[current_start_station_id]:\n",
++    "            if BigDict[current_start_station_id][bike][2]:\n",
++    "                del temp[bike]\n",
++    "        BigDict[current_start_station_id] = temp\n",
++    "    else:\n",
++    "        pass\n",
++    "\n",
++    "    if current_end_station_id not in BigDict:\n",
++    "        BigDict[current_end_station_id] = {current_bike_id : [current_index, current_end_time, True]}\n",
++    "\n",
++    "    BigDict[current_end_station_id][current_bike_id] = [current_index, current_end_time, True]"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 19,
++   "outputs": [
++    {
++     "ename": "KeyboardInterrupt",
++     "evalue": "",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mKeyboardInterrupt\u001B[0m                         Traceback (most recent call last)",
++      "Cell \u001B[1;32mIn[19], line 20\u001B[0m\n\u001B[0;32m     18\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m idle_time\u001B[38;5;241m.\u001B[39mtotal_seconds() \u001B[38;5;241m<\u001B[39m \u001B[38;5;241m0\u001B[39m:\n\u001B[0;32m     19\u001B[0m     BigDict[current_start_station_id][bike][\u001B[38;5;241m2\u001B[39m] \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;01mFalse\u001B[39;00m\n\u001B[1;32m---> 20\u001B[0m metro\u001B[38;5;241m.\u001B[39mat[BigDict[current_start_station_id][bike][\u001B[38;5;241m0\u001B[39m], \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124midle_time\u001B[39m\u001B[38;5;124m\"\u001B[39m] \u001B[38;5;241m=\u001B[39m idle_time\n\u001B[0;32m     22\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m BigDict[current_start_station_id][bike][\u001B[38;5;241m2\u001B[39m] \u001B[38;5;129;01mis\u001B[39;00m \u001B[38;5;28;01mFalse\u001B[39;00m:\n\u001B[0;32m     23\u001B[0m     \u001B[38;5;28;01mdel\u001B[39;00m BigDict[current_start_station_id][bike]\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexing.py:2442\u001B[0m, in \u001B[0;36m_AtIndexer.__setitem__\u001B[1;34m(self, key, value)\u001B[0m\n\u001B[0;32m   2439\u001B[0m     \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mobj\u001B[38;5;241m.\u001B[39mloc[key] \u001B[38;5;241m=\u001B[39m value\n\u001B[0;32m   2440\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m\n\u001B[1;32m-> 2442\u001B[0m \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28;43msuper\u001B[39;49m\u001B[43m(\u001B[49m\u001B[43m)\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[38;5;21;43m__setitem__\u001B[39;49m\u001B[43m(\u001B[49m\u001B[43mkey\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mvalue\u001B[49m\u001B[43m)\u001B[49m\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexing.py:2397\u001B[0m, in \u001B[0;36m_ScalarAccessIndexer.__setitem__\u001B[1;34m(self, key, value)\u001B[0m\n\u001B[0;32m   2394\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;28mlen\u001B[39m(key) \u001B[38;5;241m!=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mndim:\n\u001B[0;32m   2395\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mValueError\u001B[39;00m(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mNot enough indexers for scalar access (setting)!\u001B[39m\u001B[38;5;124m\"\u001B[39m)\n\u001B[1;32m-> 2397\u001B[0m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mobj\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_set_value\u001B[49m\u001B[43m(\u001B[49m\u001B[38;5;241;43m*\u001B[39;49m\u001B[43mkey\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mvalue\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mvalue\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mtakeable\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_takeable\u001B[49m\u001B[43m)\u001B[49m\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\frame.py:4210\u001B[0m, in \u001B[0;36mDataFrame._set_value\u001B[1;34m(self, index, col, value, takeable)\u001B[0m\n\u001B[0;32m   4208\u001B[0m     iindex \u001B[38;5;241m=\u001B[39m cast(\u001B[38;5;28mint\u001B[39m, index)\n\u001B[0;32m   4209\u001B[0m \u001B[38;5;28;01melse\u001B[39;00m:\n\u001B[1;32m-> 4210\u001B[0m     icol \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mcolumns\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mget_loc\u001B[49m\u001B[43m(\u001B[49m\u001B[43mcol\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   4211\u001B[0m     iindex \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mindex\u001B[38;5;241m.\u001B[39mget_loc(index)\n\u001B[0;32m   4212\u001B[0m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_mgr\u001B[38;5;241m.\u001B[39mcolumn_setitem(icol, iindex, value, inplace\u001B[38;5;241m=\u001B[39m\u001B[38;5;28;01mTrue\u001B[39;00m)\n",
++      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexes\\base.py:3800\u001B[0m, in \u001B[0;36mIndex.get_loc\u001B[1;34m(self, key, method, tolerance)\u001B[0m\n\u001B[0;32m   3795\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m tolerance \u001B[38;5;129;01mis\u001B[39;00m \u001B[38;5;129;01mnot\u001B[39;00m \u001B[38;5;28;01mNone\u001B[39;00m:\n\u001B[0;32m   3796\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mValueError\u001B[39;00m(\n\u001B[0;32m   3797\u001B[0m         \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mtolerance argument only valid if using pad, \u001B[39m\u001B[38;5;124m\"\u001B[39m\n\u001B[0;32m   3798\u001B[0m         \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mbackfill or nearest lookups\u001B[39m\u001B[38;5;124m\"\u001B[39m\n\u001B[0;32m   3799\u001B[0m     )\n\u001B[1;32m-> 3800\u001B[0m casted_key \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_maybe_cast_indexer\u001B[49m(key)\n\u001B[0;32m   3801\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[0;32m   3802\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_engine\u001B[38;5;241m.\u001B[39mget_loc(casted_key)\n",
++      "\u001B[1;31mKeyboardInterrupt\u001B[0m: "
++     ]
++    }
++   ],
++   "source": [
++    "BigDict = {\n",
++    "    # station_id: {\n",
++    "    #     bike_id: (transaction_id ,end_time)\n",
++    "    # }\n",
++    "}\n",
++    "\n",
++    "for i, row in metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_bike_id = row[\"bike_id\"]\n",
++    "    current_index = i\n",
++    "\n",
++    "    if current_start_station_id in BigDict:\n",
++    "        for bike in list(BigDict[current_start_station_id]):  # Create a copy of the keys\n",
++    "            idle_time = current_start_time - BigDict[current_start_station_id][bike][1]\n",
++    "            if idle_time.total_seconds() < 0:\n",
++    "                BigDict[current_start_station_id][bike][2] = False\n",
++    "            metro.at[BigDict[current_start_station_id][bike][0], \"idle_time\"] = idle_time\n",
++    "\n",
++    "            if BigDict[current_start_station_id][bike][2] is False:\n",
++    "                del BigDict[current_start_station_id][bike]\n",
++    "\n",
++    "    if current_end_station_id not in BigDict:\n",
++    "        BigDict[current_end_station_id] = {current_bike_id: [current_index, current_end_time, True]}\n",
++    "\n",
++    "    BigDict[current_end_station_id][current_bike_id] = [current_index, current_end_time, True]\n"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 21,
++   "outputs": [],
++   "source": [
++    "BigDict = {\n",
++    "    # station_id: {\n",
++    "    #     bike_id: (transaction_id ,end_time)\n",
++    "    # }\n",
++    "}\n",
++    "\n",
++    "for i, row in metro.iterrows():\n",
++    "    current_start_time = row[\"start_time\"]\n",
++    "    current_end_time = row[\"end_time\"]\n",
++    "    current_end_station_id = row[\"end_station_id\"]\n",
++    "    current_start_station_id = row[\"start_station_id\"]\n",
++    "    current_bike_id = row[\"bike_id\"]\n",
++    "    current_index = i\n",
++    "\n",
++    "    if current_start_station_id in BigDict:\n",
++    "        for bike in list(BigDict[current_start_station_id]):  # Create a copy of the keys\n",
++    "            idle_time = current_start_time - BigDict[current_start_station_id][bike][1]\n",
++    "            metro.at[BigDict[current_start_station_id][bike][0], \"idle_time\"] = idle_time\n",
++    "            if idle_time.total_seconds() >= 0:\n",
++    "                del BigDict[current_start_station_id][bike]\n",
++    "\n",
++    "    if current_end_station_id not in BigDict:\n",
++    "        BigDict[current_end_station_id] = {current_bike_id: (current_index, current_end_time)}\n",
++    "\n",
++    "    BigDict[current_end_station_id][current_bike_id] = (current_index, current_end_time)\n"
++   ],
++   "metadata": {
++    "collapsed": false,
++    "ExecuteTime": {
++     "start_time": "2023-06-02T22:31:21.606052Z",
++     "end_time": "2023-06-02T22:32:54.628082Z"
++    }
++   }
++  }
++ ],
++ "metadata": {
++  "kernelspec": {
++   "display_name": "Python 3 (ipykernel)",
++   "language": "python",
++   "name": "python3"
++  },
++  "language_info": {
++   "codemirror_mode": {
++    "name": "ipython",
++    "version": 3
++   },
++   "file_extension": ".py",
++   "mimetype": "text/x-python",
++   "name": "python",
++   "nbconvert_exporter": "python",
++   "pygments_lexer": "ipython3",
++   "version": "3.11.2"
++  }
++ },
++ "nbformat": 4,
++ "nbformat_minor": 5
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"d4257c73-2161-4ced-89f1-3047f473585a\" name=\"Changes\" comment=\"Hello\">\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/inCSV/Weather_LosAngeles.csv\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Data_Cleanup/inCSV/metro_2017_2022.csv\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gitignore\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gitignore\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/DSML_Team01.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/DSML_Team01.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Jupyter Notebook\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"Yusuf\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684338879\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"main\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1683291673\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"5312794d-98a4-4441-a7fa-688517b35a38\" />\r\n        <option name=\"url\" value=\"https://github.com/Bjufen/DSML_Team01.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2PHvaZLa9SKfvxzAVSImHG46Bzi\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;Yusuf&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/DataspellProjects/DSML_Team01/Data_Cleanup&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\yusuf\\DataspellProjects\\DSML_Team01\\Yusuf's Playground\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Initial commit\" />\r\n    <MESSAGE value=\"Hello\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Hello\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision bbc54816c07af4621578c7183af937c7089ca27b)
++++ b/.idea/workspace.xml	(date 1689162650576)
+@@ -4,17 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="Hello">
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/modules.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/.idea/workspace.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/inCSV/Weather_LosAngeles.csv" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Data_Cleanup/inCSV/metro_2017_2022.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++    <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="YUSUF AND 7AMUDEEEEEEEEEEH SOLVED IDLE TIMEEEEE">
++      <change afterPath="$PROJECT_DIR$/Idle_Time/IdleeeeeeTimeeeee.ipynb" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/DSML_Team01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DSML_Team01.iml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Idle_Time/no.1 Idle Time Code.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Idle_Time/no.1 Idle Time Code.ipynb" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Yusuf_Playground/Yusuf_Playground.ipynb" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -52,11 +49,11 @@
+                 <list>
+                   <RecentBranch>
+                     <option name="branchName" value="Yusuf" />
+-                    <option name="lastUsedInstant" value="1684338879" />
++                    <option name="lastUsedInstant" value="1689161669" />
+                   </RecentBranch>
+                   <RecentBranch>
+                     <option name="branchName" value="main" />
+-                    <option name="lastUsedInstant" value="1683291673" />
++                    <option name="lastUsedInstant" value="1689160294" />
+                   </RecentBranch>
+                 </list>
+               </option>
+@@ -79,28 +76,31 @@
+     <option name="stateVersion" value="1" />
+   </component>
+   <component name="ProjectId" id="2PHvaZLa9SKfvxzAVSImHG46Bzi" />
+-  <component name="ProjectLevelVcsManager">
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+     <ConfirmationsSetting value="2" id="Add" />
+   </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;Yusuf&quot;,
+-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/DataspellProjects/DSML_Team01/Data_Cleanup&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "ASKED_ADD_EXTERNAL_FILES": "true",
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
++    "git-widget-placeholder": "Yusuf",
++    "ignore.virus.scanning.warn.message": "true",
++    "last_opened_file_path": "C:/Users/yusuf/DataspellProjects/DSML_Team01/Idle_Time",
++    "settings.editor.selected.configurable": "reference.settings.deploy.options"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\yusuf\DataspellProjects\DSML_Team01\Idle_Time" />
++    </key>
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\yusuf\DataspellProjects\DSML_Team01\Yusuf's Playground" />
+     </key>
+@@ -121,6 +121,10 @@
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="Initial commit" />
+     <MESSAGE value="Hello" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Hello" />
++    <MESSAGE value="Two versions for Idle Time. Please look it over" />
++    <MESSAGE value="DataCleanup" />
++    <MESSAGE value="Yusuf and 7amudeeeh almost solved Idle Time" />
++    <MESSAGE value="YUSUF AND 7AMUDEEEEEEEEEEH SOLVED IDLE TIMEEEEE" />
++    <option name="LAST_COMMIT_MESSAGE" value="YUSUF AND 7AMUDEEEEEEEEEEH SOLVED IDLE TIMEEEEE" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/DSML_Team01.iml\" filepath=\"$PROJECT_DIR$/.idea/DSML_Team01.iml\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml\" filepath=\"$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision bbc54816c07af4621578c7183af937c7089ca27b)
++++ b/.idea/modules.xml	(date 1689160293517)
+@@ -3,7 +3,6 @@
+   <component name="ProjectModuleManager">
+     <modules>
+       <module fileurl="file://$PROJECT_DIR$/.idea/DSML_Team01.iml" filepath="$PROJECT_DIR$/.idea/DSML_Team01.iml" />
+-      <module fileurl="file://$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml" filepath="$PROJECT_DIR$/Data_Cleanup/.idea/Data_Cleanup.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: Data_Cleanup/Data_Cleanup.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n \"cells\": [\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 1,\r\n   \"metadata\": {\r\n    \"collapsed\": true,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:18:54.519329Z\",\r\n     \"end_time\": \"2023-05-31T22:18:54.595119Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"import pandas as pd\\n\",\r\n    \"weather_set_dirty = pd.read_csv('inCSV/Weather_LosAngeles.csv', sep=\\\",\\\")\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 2,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:18:58.305454Z\",\r\n     \"end_time\": \"2023-05-31T22:18:58.348696Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"weather_set_dirty['timestamp'] = pd.to_datetime(weather_set_dirty['timestamp'])\\n\",\r\n    \"mean_values_by_day = weather_set_dirty.groupby(weather_set_dirty[\\\"timestamp\\\"].dt.date).mean(numeric_only=True).round(1)\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 3,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:18:59.331017Z\",\r\n     \"end_time\": \"2023-05-31T22:19:03.053114Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"for col in mean_values_by_day.columns:\\n\",\r\n    \"    weather_set_dirty[col] = weather_set_dirty.apply(\\n\",\r\n    \"        lambda row: mean_values_by_day.loc[row['timestamp'].date(), col]\\n\",\r\n    \"        if pd.isnull(row[col]) else row[col],\\n\",\r\n    \"        axis=1\\n\",\r\n    \"    )\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 4,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:11.499678Z\",\r\n     \"end_time\": \"2023-05-31T22:19:11.839394Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"weather_set_dirty['cloud_cover_description'].fillna(method='ffill',inplace=True)\\n\",\r\n    \"weather_set_dirty.to_csv('outCSV/Clean_Weather_Set.csv', index=False)\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 6,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:21.332235Z\",\r\n     \"end_time\": \"2023-05-31T22:19:21.363825Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"name\": \"stdout\",\r\n     \"output_type\": \"stream\",\r\n     \"text\": [\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"RangeIndex: 77362 entries, 0 to 77361\\n\",\r\n      \"Data columns (total 9 columns):\\n\",\r\n      \" #   Column                   Non-Null Count  Dtype         \\n\",\r\n      \"---  ------                   --------------  -----         \\n\",\r\n      \" 0   city                     77362 non-null  object        \\n\",\r\n      \" 1   timestamp                77362 non-null  datetime64[ns]\\n\",\r\n      \" 2   temperature              77362 non-null  float64       \\n\",\r\n      \" 3   cloud_cover              77362 non-null  float64       \\n\",\r\n      \" 4   cloud_cover_description  77362 non-null  object        \\n\",\r\n      \" 5   pressure                 77362 non-null  float64       \\n\",\r\n      \" 6   windspeed                77362 non-null  float64       \\n\",\r\n      \" 7   precipitation            77362 non-null  float64       \\n\",\r\n      \" 8   felt_temperature         77362 non-null  float64       \\n\",\r\n      \"dtypes: datetime64[ns](1), float64(6), object(2)\\n\",\r\n      \"memory usage: 5.3+ MB\\n\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"weather_set_dirty.info()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 18,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:33.548416Z\",\r\n     \"end_time\": \"2023-05-31T22:19:35.475467Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"ename\": \"KeyError\",\r\n     \"evalue\": \"0\",\r\n     \"output_type\": \"error\",\r\n     \"traceback\": [\r\n      \"\\u001B[1;31m---------------------------------------------------------------------------\\u001B[0m\",\r\n      \"\\u001B[1;31mKeyError\\u001B[0m                                  Traceback (most recent call last)\",\r\n      \"File \\u001B[1;32m~\\\\anaconda3\\\\envs\\\\DSML_Team01\\\\lib\\\\site-packages\\\\pandas\\\\core\\\\indexes\\\\base.py:3802\\u001B[0m, in \\u001B[0;36mIndex.get_loc\\u001B[1;34m(self, key, method, tolerance)\\u001B[0m\\n\\u001B[0;32m   3801\\u001B[0m \\u001B[38;5;28;01mtry\\u001B[39;00m:\\n\\u001B[1;32m-> 3802\\u001B[0m     \\u001B[38;5;28;01mreturn\\u001B[39;00m \\u001B[38;5;28;43mself\\u001B[39;49m\\u001B[38;5;241;43m.\\u001B[39;49m\\u001B[43m_engine\\u001B[49m\\u001B[38;5;241;43m.\\u001B[39;49m\\u001B[43mget_loc\\u001B[49m\\u001B[43m(\\u001B[49m\\u001B[43mcasted_key\\u001B[49m\\u001B[43m)\\u001B[49m\\n\\u001B[0;32m   3803\\u001B[0m \\u001B[38;5;28;01mexcept\\u001B[39;00m \\u001B[38;5;167;01mKeyError\\u001B[39;00m \\u001B[38;5;28;01mas\\u001B[39;00m err:\\n\",\r\n      \"File \\u001B[1;32m~\\\\anaconda3\\\\envs\\\\DSML_Team01\\\\lib\\\\site-packages\\\\pandas\\\\_libs\\\\index.pyx:138\\u001B[0m, in \\u001B[0;36mpandas._libs.index.IndexEngine.get_loc\\u001B[1;34m()\\u001B[0m\\n\",\r\n      \"File \\u001B[1;32m~\\\\anaconda3\\\\envs\\\\DSML_Team01\\\\lib\\\\site-packages\\\\pandas\\\\_libs\\\\index.pyx:165\\u001B[0m, in \\u001B[0;36mpandas._libs.index.IndexEngine.get_loc\\u001B[1;34m()\\u001B[0m\\n\",\r\n      \"File \\u001B[1;32mpandas\\\\_libs\\\\hashtable_class_helper.pxi:5745\\u001B[0m, in \\u001B[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\\u001B[1;34m()\\u001B[0m\\n\",\r\n      \"File \\u001B[1;32mpandas\\\\_libs\\\\hashtable_class_helper.pxi:5753\\u001B[0m, in \\u001B[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\\u001B[1;34m()\\u001B[0m\\n\",\r\n      \"\\u001B[1;31mKeyError\\u001B[0m: 0\",\r\n      \"\\nThe above exception was the direct cause of the following exception:\\n\",\r\n      \"\\u001B[1;31mKeyError\\u001B[0m                                  Traceback (most recent call last)\",\r\n      \"Cell \\u001B[1;32mIn[18], line 2\\u001B[0m\\n\\u001B[0;32m      1\\u001B[0m bike_set_dirty \\u001B[38;5;241m=\\u001B[39m pd\\u001B[38;5;241m.\\u001B[39mread_csv(\\u001B[38;5;124m'\\u001B[39m\\u001B[38;5;124minCSV/metro_2017_2022.csv\\u001B[39m\\u001B[38;5;124m'\\u001B[39m, sep\\u001B[38;5;241m=\\u001B[39m\\u001B[38;5;124m'\\u001B[39m\\u001B[38;5;124m,\\u001B[39m\\u001B[38;5;124m'\\u001B[39m, index_col\\u001B[38;5;241m=\\u001B[39m\\u001B[38;5;241m0\\u001B[39m)\\n\\u001B[1;32m----> 2\\u001B[0m \\u001B[43mbike_set_dirty\\u001B[49m\\u001B[43m[\\u001B[49m\\u001B[38;5;241;43m0\\u001B[39;49m\\u001B[43m]\\u001B[49m\\n\",\r\n      \"File \\u001B[1;32m~\\\\anaconda3\\\\envs\\\\DSML_Team01\\\\lib\\\\site-packages\\\\pandas\\\\core\\\\frame.py:3807\\u001B[0m, in \\u001B[0;36mDataFrame.__getitem__\\u001B[1;34m(self, key)\\u001B[0m\\n\\u001B[0;32m   3805\\u001B[0m \\u001B[38;5;28;01mif\\u001B[39;00m \\u001B[38;5;28mself\\u001B[39m\\u001B[38;5;241m.\\u001B[39mcolumns\\u001B[38;5;241m.\\u001B[39mnlevels \\u001B[38;5;241m>\\u001B[39m \\u001B[38;5;241m1\\u001B[39m:\\n\\u001B[0;32m   3806\\u001B[0m     \\u001B[38;5;28;01mreturn\\u001B[39;00m \\u001B[38;5;28mself\\u001B[39m\\u001B[38;5;241m.\\u001B[39m_getitem_multilevel(key)\\n\\u001B[1;32m-> 3807\\u001B[0m indexer \\u001B[38;5;241m=\\u001B[39m \\u001B[38;5;28;43mself\\u001B[39;49m\\u001B[38;5;241;43m.\\u001B[39;49m\\u001B[43mcolumns\\u001B[49m\\u001B[38;5;241;43m.\\u001B[39;49m\\u001B[43mget_loc\\u001B[49m\\u001B[43m(\\u001B[49m\\u001B[43mkey\\u001B[49m\\u001B[43m)\\u001B[49m\\n\\u001B[0;32m   3808\\u001B[0m \\u001B[38;5;28;01mif\\u001B[39;00m is_integer(indexer):\\n\\u001B[0;32m   3809\\u001B[0m     indexer \\u001B[38;5;241m=\\u001B[39m [indexer]\\n\",\r\n      \"File \\u001B[1;32m~\\\\anaconda3\\\\envs\\\\DSML_Team01\\\\lib\\\\site-packages\\\\pandas\\\\core\\\\indexes\\\\base.py:3804\\u001B[0m, in \\u001B[0;36mIndex.get_loc\\u001B[1;34m(self, key, method, tolerance)\\u001B[0m\\n\\u001B[0;32m   3802\\u001B[0m     \\u001B[38;5;28;01mreturn\\u001B[39;00m \\u001B[38;5;28mself\\u001B[39m\\u001B[38;5;241m.\\u001B[39m_engine\\u001B[38;5;241m.\\u001B[39mget_loc(casted_key)\\n\\u001B[0;32m   3803\\u001B[0m \\u001B[38;5;28;01mexcept\\u001B[39;00m \\u001B[38;5;167;01mKeyError\\u001B[39;00m \\u001B[38;5;28;01mas\\u001B[39;00m err:\\n\\u001B[1;32m-> 3804\\u001B[0m     \\u001B[38;5;28;01mraise\\u001B[39;00m \\u001B[38;5;167;01mKeyError\\u001B[39;00m(key) \\u001B[38;5;28;01mfrom\\u001B[39;00m \\u001B[38;5;21;01merr\\u001B[39;00m\\n\\u001B[0;32m   3805\\u001B[0m \\u001B[38;5;28;01mexcept\\u001B[39;00m \\u001B[38;5;167;01mTypeError\\u001B[39;00m:\\n\\u001B[0;32m   3806\\u001B[0m     \\u001B[38;5;66;03m# If we have a listlike key, _check_indexing_error will raise\\u001B[39;00m\\n\\u001B[0;32m   3807\\u001B[0m     \\u001B[38;5;66;03m#  InvalidIndexError. Otherwise we fall through and re-raise\\u001B[39;00m\\n\\u001B[0;32m   3808\\u001B[0m     \\u001B[38;5;66;03m#  the TypeError.\\u001B[39;00m\\n\\u001B[0;32m   3809\\u001B[0m     \\u001B[38;5;28mself\\u001B[39m\\u001B[38;5;241m.\\u001B[39m_check_indexing_error(key)\\n\",\r\n      \"\\u001B[1;31mKeyError\\u001B[0m: 0\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"bike_set_dirty = pd.read_csv('inCSV/metro_2017_2022.csv', sep=',', index_col=0)\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 8,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:36.589345Z\",\r\n     \"end_time\": \"2023-05-31T22:19:37.309467Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"bike_set_dirty.sort_values('start_station_id')\\n\",\r\n    \"bike_set_dirty['start_station_lat'].fillna(method=\\\"ffill\\\", inplace=True)\\n\",\r\n    \"bike_set_dirty['start_station_lon'].fillna(method=\\\"ffill\\\", inplace=True)\\n\",\r\n    \"\\n\",\r\n    \"bike_set_dirty.sort_values('end_station_id')\\n\",\r\n    \"bike_set_dirty['end_station_lat'].fillna(method=\\\"ffill\\\", inplace=True)\\n\",\r\n    \"bike_set_dirty['end_station_lon'].fillna(method=\\\"ffill\\\", inplace=True)\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 9,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:44.518399Z\",\r\n     \"end_time\": \"2023-05-31T22:19:44.962653Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"bike_set_dirty_agg_start = bike_set_dirty.groupby('start_station_id')[['start_station_lat', 'start_station_lon']].agg(lambda x: x.mode().iloc[0])\\n\",\r\n    \"bike_set_dirty_agg_end = bike_set_dirty.groupby('end_station_id')[['end_station_lat', 'end_station_lon']].agg(lambda x: x.mode().iloc[0])\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 10,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:46.285404Z\",\r\n     \"end_time\": \"2023-05-31T22:19:47.691767Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"name\": \"stdout\",\r\n     \"output_type\": \"stream\",\r\n     \"text\": [\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"Int64Index: 1552782 entries, 0 to 1552781\\n\",\r\n      \"Data columns (total 13 columns):\\n\",\r\n      \" #   Column                  Non-Null Count    Dtype  \\n\",\r\n      \"---  ------                  --------------    -----  \\n\",\r\n      \" 0   start_time              1552782 non-null  object \\n\",\r\n      \" 1   end_time                1552782 non-null  object \\n\",\r\n      \" 2   start_station_id        1552782 non-null  int64  \\n\",\r\n      \" 3   start_station_lat       1552782 non-null  float64\\n\",\r\n      \" 4   start_station_lon       1552782 non-null  float64\\n\",\r\n      \" 5   end_station_id          1552782 non-null  int64  \\n\",\r\n      \" 6   end_station_lat         1552782 non-null  float64\\n\",\r\n      \" 7   end_station_lon         1552782 non-null  float64\\n\",\r\n      \" 8   bike_id                 1552782 non-null  object \\n\",\r\n      \" 9   start_station_lat_mode  1552782 non-null  float64\\n\",\r\n      \" 10  start_station_lon_mode  1552782 non-null  float64\\n\",\r\n      \" 11  end_station_lat_mode    1552782 non-null  float64\\n\",\r\n      \" 12  end_station_lon_mode    1552782 non-null  float64\\n\",\r\n      \"dtypes: float64(8), int64(2), object(3)\\n\",\r\n      \"memory usage: 165.9+ MB\\n\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"bike_set_dirty_merge = bike_set_dirty.merge(bike_set_dirty_agg_start, on='start_station_id', suffixes=('','_mode'))\\n\",\r\n    \"bike_set_dirty_merged = bike_set_dirty_merge.merge(bike_set_dirty_agg_end, on='end_station_id', suffixes=('','_mode'))\\n\",\r\n    \"bike_set_dirty_merged.info()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 11,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:19:52.565314Z\",\r\n     \"end_time\": \"2023-05-31T22:25:54.204202Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"from datetime import datetime\\n\",\r\n    \"dateformat0 = \\\"%H/%M/%S %d-%m-%Y\\\"\\n\",\r\n    \"dateformat1 = \\\"%Y-%m-%d %H:%M:%S\\\"\\n\",\r\n    \"for i, row in bike_set_dirty_merged.iterrows():\\n\",\r\n    \"    bike_set_dirty_merged.at[i, 'start_station_lat'] = bike_set_dirty_merged.loc[i, 'start_station_lat_mode']\\n\",\r\n    \"    bike_set_dirty_merged.at[i, 'start_station_lon'] = bike_set_dirty_merged.loc[i, 'start_station_lon_mode']\\n\",\r\n    \"    bike_set_dirty_merged.at[i, 'end_station_lat'] = bike_set_dirty_merged.loc[i, 'end_station_lat_mode']\\n\",\r\n    \"    bike_set_dirty_merged.at[i, 'end_station_lon'] = bike_set_dirty_merged.loc[i, 'end_station_lon_mode']\\n\",\r\n    \"\\n\",\r\n    \"    try:\\n\",\r\n    \"        bike_set_dirty_merged.at[i, 'start_time'] = datetime.strptime(bike_set_dirty_merged.loc[i, 'start_time'], dateformat0)\\n\",\r\n    \"    except ValueError:\\n\",\r\n    \"        bike_set_dirty_merged.at[i, 'start_time'] = datetime.strptime(bike_set_dirty_merged.loc[i, 'start_time'], dateformat1)\\n\",\r\n    \"    try:\\n\",\r\n    \"        bike_set_dirty_merged.at[i, 'end_time'] = datetime.strptime(bike_set_dirty_merged.loc[i, 'end_time'], dateformat0)\\n\",\r\n    \"    except ValueError:\\n\",\r\n    \"        bike_set_dirty_merged.at[i, 'end_time'] = datetime.strptime(bike_set_dirty_merged.loc[i, 'end_time'], dateformat1)\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 12,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:26:02.920660Z\",\r\n     \"end_time\": \"2023-05-31T22:26:03.388297Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"name\": \"stdout\",\r\n     \"output_type\": \"stream\",\r\n     \"text\": [\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"Int64Index: 1552782 entries, 0 to 1552781\\n\",\r\n      \"Data columns (total 13 columns):\\n\",\r\n      \" #   Column                  Non-Null Count    Dtype  \\n\",\r\n      \"---  ------                  --------------    -----  \\n\",\r\n      \" 0   start_time              1552782 non-null  object \\n\",\r\n      \" 1   end_time                1552782 non-null  object \\n\",\r\n      \" 2   start_station_id        1552782 non-null  int64  \\n\",\r\n      \" 3   start_station_lat       1552782 non-null  float64\\n\",\r\n      \" 4   start_station_lon       1552782 non-null  float64\\n\",\r\n      \" 5   end_station_id          1552782 non-null  int64  \\n\",\r\n      \" 6   end_station_lat         1552782 non-null  float64\\n\",\r\n      \" 7   end_station_lon         1552782 non-null  float64\\n\",\r\n      \" 8   bike_id                 1552782 non-null  object \\n\",\r\n      \" 9   start_station_lat_mode  1552782 non-null  float64\\n\",\r\n      \" 10  start_station_lon_mode  1552782 non-null  float64\\n\",\r\n      \" 11  end_station_lat_mode    1552782 non-null  float64\\n\",\r\n      \" 12  end_station_lon_mode    1552782 non-null  float64\\n\",\r\n      \"dtypes: float64(8), int64(2), object(3)\\n\",\r\n      \"memory usage: 198.1+ MB\\n\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"bike_set_almost_clean = bike_set_dirty_merged\\n\",\r\n    \"bike_set_almost_clean.info()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": null,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T17:41:48.077054Z\",\r\n     \"end_time\": \"2023-05-31T17:45:47.934294Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"#from datetime import datetime\\n\",\r\n    \"#dateformat0 = \\\"%H/%M/%S %d-%m-%Y\\\"\\n\",\r\n    \"#dateformat1 = \\\"%Y-%m-%d %H:%M:%S\\\"\\n\",\r\n    \"#for i, row in bike_set_almost_clean.iterrows():\\n\",\r\n    \"#    try:\\n\",\r\n    \"#        bike_set_almost_clean.at[i, 'start_time'] = datetime.strptime(bike_set_almost_clean.loc[i, 'start_time'], dateformat0)\\n\",\r\n    \"#    except ValueError:\\n\",\r\n    \"#        bike_set_almost_clean.at[i, 'start_time'] = datetime.strptime(bike_set_almost_clean.loc[i, 'start_time'], dateformat1)\\n\",\r\n    \"#    try:\\n\",\r\n    \"#        bike_set_almost_clean.at[i, 'end_time'] = datetime.strptime(bike_set_almost_clean.loc[i, 'end_time'], dateformat0)\\n\",\r\n    \"#    except ValueError:\\n\",\r\n    \"#        bike_set_almost_clean.at[i, 'end_time'] = datetime.strptime(bike_set_almost_clean.loc[i, 'end_time'], dateformat1)\\n\",\r\n    \"#bike_set_almost_clean.head()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 13,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:26:43.716952Z\",\r\n     \"end_time\": \"2023-05-31T22:26:44.237738Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"name\": \"stdout\",\r\n     \"output_type\": \"stream\",\r\n     \"text\": [\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"Int64Index: 1552782 entries, 0 to 1552781\\n\",\r\n      \"Data columns (total 9 columns):\\n\",\r\n      \" #   Column             Non-Null Count    Dtype  \\n\",\r\n      \"---  ------             --------------    -----  \\n\",\r\n      \" 0   start_time         1552782 non-null  object \\n\",\r\n      \" 1   end_time           1552782 non-null  object \\n\",\r\n      \" 2   start_station_id   1552782 non-null  int64  \\n\",\r\n      \" 3   start_station_lat  1552782 non-null  float64\\n\",\r\n      \" 4   start_station_lon  1552782 non-null  float64\\n\",\r\n      \" 5   end_station_id     1552782 non-null  int64  \\n\",\r\n      \" 6   end_station_lat    1552782 non-null  float64\\n\",\r\n      \" 7   end_station_lon    1552782 non-null  float64\\n\",\r\n      \" 8   bike_id            1552782 non-null  object \\n\",\r\n      \"dtypes: float64(4), int64(2), object(3)\\n\",\r\n      \"memory usage: 150.7+ MB\\n\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"bike_set_clean = bike_set_almost_clean.drop(['start_station_lat_mode', 'start_station_lon_mode', 'end_station_lat_mode', 'end_station_lon_mode'], axis=1)\\n\",\r\n    \"bike_set_clean.info()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 14,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:26:48.761349Z\",\r\n     \"end_time\": \"2023-05-31T22:26:49.406527Z\"\r\n    }\r\n   },\r\n   \"outputs\": [\r\n    {\r\n     \"name\": \"stdout\",\r\n     \"output_type\": \"stream\",\r\n     \"text\": [\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"Int64Index: 1552782 entries, 0 to 1552781\\n\",\r\n      \"Data columns (total 9 columns):\\n\",\r\n      \" #   Column             Non-Null Count    Dtype         \\n\",\r\n      \"---  ------             --------------    -----         \\n\",\r\n      \" 0   start_time         1552782 non-null  datetime64[ns]\\n\",\r\n      \" 1   end_time           1552782 non-null  object        \\n\",\r\n      \" 2   start_station_id   1552782 non-null  int64         \\n\",\r\n      \" 3   start_station_lat  1552782 non-null  float64       \\n\",\r\n      \" 4   start_station_lon  1552782 non-null  float64       \\n\",\r\n      \" 5   end_station_id     1552782 non-null  int64         \\n\",\r\n      \" 6   end_station_lat    1552782 non-null  float64       \\n\",\r\n      \" 7   end_station_lon    1552782 non-null  float64       \\n\",\r\n      \" 8   bike_id            1552782 non-null  object        \\n\",\r\n      \"dtypes: datetime64[ns](1), float64(4), int64(2), object(2)\\n\",\r\n      \"memory usage: 150.7+ MB\\n\",\r\n      \"<class 'pandas.core.frame.DataFrame'>\\n\",\r\n      \"Int64Index: 1552782 entries, 0 to 1552781\\n\",\r\n      \"Data columns (total 9 columns):\\n\",\r\n      \" #   Column             Non-Null Count    Dtype         \\n\",\r\n      \"---  ------             --------------    -----         \\n\",\r\n      \" 0   start_time         1552782 non-null  datetime64[ns]\\n\",\r\n      \" 1   end_time           1552782 non-null  datetime64[ns]\\n\",\r\n      \" 2   start_station_id   1552782 non-null  int64         \\n\",\r\n      \" 3   start_station_lat  1552782 non-null  float64       \\n\",\r\n      \" 4   start_station_lon  1552782 non-null  float64       \\n\",\r\n      \" 5   end_station_id     1552782 non-null  int64         \\n\",\r\n      \" 6   end_station_lat    1552782 non-null  float64       \\n\",\r\n      \" 7   end_station_lon    1552782 non-null  float64       \\n\",\r\n      \" 8   bike_id            1552782 non-null  object        \\n\",\r\n      \"dtypes: datetime64[ns](2), float64(4), int64(2), object(1)\\n\",\r\n      \"memory usage: 150.7+ MB\\n\"\r\n     ]\r\n    }\r\n   ],\r\n   \"source\": [\r\n    \"bike_set_clean['start_time'] = pd.to_datetime(bike_set_almost_clean['start_time'], format=\\\"%Y-%m-%d %H:%M:%S\\\")\\n\",\r\n    \"bike_set_clean.info()\\n\",\r\n    \"bike_set_clean['end_time'] = pd.to_datetime(bike_set_almost_clean['end_time'], format=\\\"%Y-%m-%d %H:%M:%S\\\")\\n\",\r\n    \"bike_set_clean.info()\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 15,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-05-31T22:26:56.134635Z\",\r\n     \"end_time\": \"2023-05-31T22:27:04.408290Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"bike_set_clean.to_csv('outCSV/Clean_Metro_Set.csv')\"\r\n   ]\r\n  }\r\n ],\r\n \"metadata\": {\r\n  \"kernelspec\": {\r\n   \"display_name\": \"Python 3\",\r\n   \"language\": \"python\",\r\n   \"name\": \"python3\"\r\n  },\r\n  \"language_info\": {\r\n   \"codemirror_mode\": {\r\n    \"name\": \"ipython\",\r\n    \"version\": 2\r\n   },\r\n   \"file_extension\": \".py\",\r\n   \"mimetype\": \"text/x-python\",\r\n   \"name\": \"python\",\r\n   \"nbconvert_exporter\": \"python\",\r\n   \"pygments_lexer\": \"ipython2\",\r\n   \"version\": \"2.7.6\"\r\n  }\r\n },\r\n \"nbformat\": 4,\r\n \"nbformat_minor\": 0\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Data_Cleanup/Data_Cleanup.ipynb b/Data_Cleanup/Data_Cleanup.ipynb
+--- a/Data_Cleanup/Data_Cleanup.ipynb	(revision bbc54816c07af4621578c7183af937c7089ca27b)
++++ b/Data_Cleanup/Data_Cleanup.ipynb	(date 1689162600262)
+@@ -6,8 +6,8 @@
+    "metadata": {
+     "collapsed": true,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:18:54.519329Z",
+-     "end_time": "2023-05-31T22:18:54.595119Z"
++     "start_time": "2023-07-12T13:40:56.902418Z",
++     "end_time": "2023-07-12T13:40:57.798607Z"
+     }
+    },
+    "outputs": [],
+@@ -22,8 +22,8 @@
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:18:58.305454Z",
+-     "end_time": "2023-05-31T22:18:58.348696Z"
++     "start_time": "2023-07-12T13:40:57.798607Z",
++     "end_time": "2023-07-12T13:40:57.923916Z"
+     }
+    },
+    "outputs": [],
+@@ -38,8 +38,8 @@
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:18:59.331017Z",
+-     "end_time": "2023-05-31T22:19:03.053114Z"
++     "start_time": "2023-07-12T13:40:58.128367Z",
++     "end_time": "2023-07-12T13:41:02.865542Z"
+     }
+    },
+    "outputs": [],
+@@ -58,8 +58,8 @@
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:11.499678Z",
+-     "end_time": "2023-05-31T22:19:11.839394Z"
++     "start_time": "2023-07-12T13:41:02.872654Z",
++     "end_time": "2023-07-12T13:41:03.398067Z"
+     }
+    },
+    "outputs": [],
+@@ -70,12 +70,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 6,
++   "execution_count": 5,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:21.332235Z",
+-     "end_time": "2023-05-31T22:19:21.363825Z"
++     "start_time": "2023-07-12T13:41:03.398067Z",
++     "end_time": "2023-07-12T13:41:03.460681Z"
+     }
+    },
+    "outputs": [
+@@ -108,49 +108,27 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 18,
++   "execution_count": 6,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:33.548416Z",
+-     "end_time": "2023-05-31T22:19:35.475467Z"
++     "start_time": "2023-07-12T13:41:03.445043Z",
++     "end_time": "2023-07-12T13:41:06.370083Z"
+     }
+    },
+-   "outputs": [
+-    {
+-     "ename": "KeyError",
+-     "evalue": "0",
+-     "output_type": "error",
+-     "traceback": [
+-      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
+-      "\u001B[1;31mKeyError\u001B[0m                                  Traceback (most recent call last)",
+-      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexes\\base.py:3802\u001B[0m, in \u001B[0;36mIndex.get_loc\u001B[1;34m(self, key, method, tolerance)\u001B[0m\n\u001B[0;32m   3801\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m-> 3802\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_engine\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mget_loc\u001B[49m\u001B[43m(\u001B[49m\u001B[43mcasted_key\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   3803\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m \u001B[38;5;167;01mKeyError\u001B[39;00m \u001B[38;5;28;01mas\u001B[39;00m err:\n",
+-      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\_libs\\index.pyx:138\u001B[0m, in \u001B[0;36mpandas._libs.index.IndexEngine.get_loc\u001B[1;34m()\u001B[0m\n",
+-      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\_libs\\index.pyx:165\u001B[0m, in \u001B[0;36mpandas._libs.index.IndexEngine.get_loc\u001B[1;34m()\u001B[0m\n",
+-      "File \u001B[1;32mpandas\\_libs\\hashtable_class_helper.pxi:5745\u001B[0m, in \u001B[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\u001B[1;34m()\u001B[0m\n",
+-      "File \u001B[1;32mpandas\\_libs\\hashtable_class_helper.pxi:5753\u001B[0m, in \u001B[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\u001B[1;34m()\u001B[0m\n",
+-      "\u001B[1;31mKeyError\u001B[0m: 0",
+-      "\nThe above exception was the direct cause of the following exception:\n",
+-      "\u001B[1;31mKeyError\u001B[0m                                  Traceback (most recent call last)",
+-      "Cell \u001B[1;32mIn[18], line 2\u001B[0m\n\u001B[0;32m      1\u001B[0m bike_set_dirty \u001B[38;5;241m=\u001B[39m pd\u001B[38;5;241m.\u001B[39mread_csv(\u001B[38;5;124m'\u001B[39m\u001B[38;5;124minCSV/metro_2017_2022.csv\u001B[39m\u001B[38;5;124m'\u001B[39m, sep\u001B[38;5;241m=\u001B[39m\u001B[38;5;124m'\u001B[39m\u001B[38;5;124m,\u001B[39m\u001B[38;5;124m'\u001B[39m, index_col\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m0\u001B[39m)\n\u001B[1;32m----> 2\u001B[0m \u001B[43mbike_set_dirty\u001B[49m\u001B[43m[\u001B[49m\u001B[38;5;241;43m0\u001B[39;49m\u001B[43m]\u001B[49m\n",
+-      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\frame.py:3807\u001B[0m, in \u001B[0;36mDataFrame.__getitem__\u001B[1;34m(self, key)\u001B[0m\n\u001B[0;32m   3805\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mcolumns\u001B[38;5;241m.\u001B[39mnlevels \u001B[38;5;241m>\u001B[39m \u001B[38;5;241m1\u001B[39m:\n\u001B[0;32m   3806\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_getitem_multilevel(key)\n\u001B[1;32m-> 3807\u001B[0m indexer \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mcolumns\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mget_loc\u001B[49m\u001B[43m(\u001B[49m\u001B[43mkey\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   3808\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m is_integer(indexer):\n\u001B[0;32m   3809\u001B[0m     indexer \u001B[38;5;241m=\u001B[39m [indexer]\n",
+-      "File \u001B[1;32m~\\anaconda3\\envs\\DSML_Team01\\lib\\site-packages\\pandas\\core\\indexes\\base.py:3804\u001B[0m, in \u001B[0;36mIndex.get_loc\u001B[1;34m(self, key, method, tolerance)\u001B[0m\n\u001B[0;32m   3802\u001B[0m     \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_engine\u001B[38;5;241m.\u001B[39mget_loc(casted_key)\n\u001B[0;32m   3803\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m \u001B[38;5;167;01mKeyError\u001B[39;00m \u001B[38;5;28;01mas\u001B[39;00m err:\n\u001B[1;32m-> 3804\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mKeyError\u001B[39;00m(key) \u001B[38;5;28;01mfrom\u001B[39;00m \u001B[38;5;21;01merr\u001B[39;00m\n\u001B[0;32m   3805\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m \u001B[38;5;167;01mTypeError\u001B[39;00m:\n\u001B[0;32m   3806\u001B[0m     \u001B[38;5;66;03m# If we have a listlike key, _check_indexing_error will raise\u001B[39;00m\n\u001B[0;32m   3807\u001B[0m     \u001B[38;5;66;03m#  InvalidIndexError. Otherwise we fall through and re-raise\u001B[39;00m\n\u001B[0;32m   3808\u001B[0m     \u001B[38;5;66;03m#  the TypeError.\u001B[39;00m\n\u001B[0;32m   3809\u001B[0m     \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_check_indexing_error(key)\n",
+-      "\u001B[1;31mKeyError\u001B[0m: 0"
+-     ]
+-    }
+-   ],
++   "outputs": [],
+    "source": [
+     "bike_set_dirty = pd.read_csv('inCSV/metro_2017_2022.csv', sep=',', index_col=0)"
+    ]
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 8,
++   "execution_count": 7,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:36.589345Z",
+-     "end_time": "2023-05-31T22:19:37.309467Z"
++     "start_time": "2023-07-12T13:41:06.370083Z",
++     "end_time": "2023-07-12T13:41:07.263368Z"
+     }
+    },
+    "outputs": [],
+@@ -166,12 +144,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 9,
++   "execution_count": 8,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:44.518399Z",
+-     "end_time": "2023-05-31T22:19:44.962653Z"
++     "start_time": "2023-07-12T13:41:07.285574Z",
++     "end_time": "2023-07-12T13:41:07.871957Z"
+     }
+    },
+    "outputs": [],
+@@ -182,12 +160,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 10,
++   "execution_count": 9,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-05-31T22:19:46.285404Z",
+-     "end_time": "2023-05-31T22:19:47.691767Z"
++     "start_time": "2023-07-12T13:41:07.871957Z",
++     "end_time": "2023-07-12T13:41:09.793269Z"
+     }
+    },
+    "outputs": [
+@@ -226,7 +204,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 11,
++   "execution_count": 10,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+@@ -234,7 +212,17 @@
+      "end_time": "2023-05-31T22:25:54.204202Z"
+     }
+    },
+-   "outputs": [],
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "\n",
++      "KeyboardInterrupt\n",
++      "\n"
++     ]
++    }
++   ],
+    "source": [
+     "from datetime import datetime\n",
+     "dateformat0 = \"%H/%M/%S %d-%m-%Y\"\n",
+@@ -257,7 +245,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 12,
++   "execution_count": null,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+@@ -265,34 +253,7 @@
+      "end_time": "2023-05-31T22:26:03.388297Z"
+     }
+    },
+-   "outputs": [
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-      "<class 'pandas.core.frame.DataFrame'>\n",
+-      "Int64Index: 1552782 entries, 0 to 1552781\n",
+-      "Data columns (total 13 columns):\n",
+-      " #   Column                  Non-Null Count    Dtype  \n",
+-      "---  ------                  --------------    -----  \n",
+-      " 0   start_time              1552782 non-null  object \n",
+-      " 1   end_time                1552782 non-null  object \n",
+-      " 2   start_station_id        1552782 non-null  int64  \n",
+-      " 3   start_station_lat       1552782 non-null  float64\n",
+-      " 4   start_station_lon       1552782 non-null  float64\n",
+-      " 5   end_station_id          1552782 non-null  int64  \n",
+-      " 6   end_station_lat         1552782 non-null  float64\n",
+-      " 7   end_station_lon         1552782 non-null  float64\n",
+-      " 8   bike_id                 1552782 non-null  object \n",
+-      " 9   start_station_lat_mode  1552782 non-null  float64\n",
+-      " 10  start_station_lon_mode  1552782 non-null  float64\n",
+-      " 11  end_station_lat_mode    1552782 non-null  float64\n",
+-      " 12  end_station_lon_mode    1552782 non-null  float64\n",
+-      "dtypes: float64(8), int64(2), object(3)\n",
+-      "memory usage: 198.1+ MB\n"
+-     ]
+-    }
+-   ],
++   "outputs": [],
+    "source": [
+     "bike_set_almost_clean = bike_set_dirty_merged\n",
+     "bike_set_almost_clean.info()"
+@@ -327,7 +288,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 13,
++   "execution_count": null,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+@@ -335,30 +296,7 @@
+      "end_time": "2023-05-31T22:26:44.237738Z"
+     }
+    },
+-   "outputs": [
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-      "<class 'pandas.core.frame.DataFrame'>\n",
+-      "Int64Index: 1552782 entries, 0 to 1552781\n",
+-      "Data columns (total 9 columns):\n",
+-      " #   Column             Non-Null Count    Dtype  \n",
+-      "---  ------             --------------    -----  \n",
+-      " 0   start_time         1552782 non-null  object \n",
+-      " 1   end_time           1552782 non-null  object \n",
+-      " 2   start_station_id   1552782 non-null  int64  \n",
+-      " 3   start_station_lat  1552782 non-null  float64\n",
+-      " 4   start_station_lon  1552782 non-null  float64\n",
+-      " 5   end_station_id     1552782 non-null  int64  \n",
+-      " 6   end_station_lat    1552782 non-null  float64\n",
+-      " 7   end_station_lon    1552782 non-null  float64\n",
+-      " 8   bike_id            1552782 non-null  object \n",
+-      "dtypes: float64(4), int64(2), object(3)\n",
+-      "memory usage: 150.7+ MB\n"
+-     ]
+-    }
+-   ],
++   "outputs": [],
+    "source": [
+     "bike_set_clean = bike_set_almost_clean.drop(['start_station_lat_mode', 'start_station_lon_mode', 'end_station_lat_mode', 'end_station_lon_mode'], axis=1)\n",
+     "bike_set_clean.info()"
+@@ -366,7 +304,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 14,
++   "execution_count": null,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+@@ -374,46 +312,7 @@
+      "end_time": "2023-05-31T22:26:49.406527Z"
+     }
+    },
+-   "outputs": [
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-      "<class 'pandas.core.frame.DataFrame'>\n",
+-      "Int64Index: 1552782 entries, 0 to 1552781\n",
+-      "Data columns (total 9 columns):\n",
+-      " #   Column             Non-Null Count    Dtype         \n",
+-      "---  ------             --------------    -----         \n",
+-      " 0   start_time         1552782 non-null  datetime64[ns]\n",
+-      " 1   end_time           1552782 non-null  object        \n",
+-      " 2   start_station_id   1552782 non-null  int64         \n",
+-      " 3   start_station_lat  1552782 non-null  float64       \n",
+-      " 4   start_station_lon  1552782 non-null  float64       \n",
+-      " 5   end_station_id     1552782 non-null  int64         \n",
+-      " 6   end_station_lat    1552782 non-null  float64       \n",
+-      " 7   end_station_lon    1552782 non-null  float64       \n",
+-      " 8   bike_id            1552782 non-null  object        \n",
+-      "dtypes: datetime64[ns](1), float64(4), int64(2), object(2)\n",
+-      "memory usage: 150.7+ MB\n",
+-      "<class 'pandas.core.frame.DataFrame'>\n",
+-      "Int64Index: 1552782 entries, 0 to 1552781\n",
+-      "Data columns (total 9 columns):\n",
+-      " #   Column             Non-Null Count    Dtype         \n",
+-      "---  ------             --------------    -----         \n",
+-      " 0   start_time         1552782 non-null  datetime64[ns]\n",
+-      " 1   end_time           1552782 non-null  datetime64[ns]\n",
+-      " 2   start_station_id   1552782 non-null  int64         \n",
+-      " 3   start_station_lat  1552782 non-null  float64       \n",
+-      " 4   start_station_lon  1552782 non-null  float64       \n",
+-      " 5   end_station_id     1552782 non-null  int64         \n",
+-      " 6   end_station_lat    1552782 non-null  float64       \n",
+-      " 7   end_station_lon    1552782 non-null  float64       \n",
+-      " 8   bike_id            1552782 non-null  object        \n",
+-      "dtypes: datetime64[ns](2), float64(4), int64(2), object(1)\n",
+-      "memory usage: 150.7+ MB\n"
+-     ]
+-    }
+-   ],
++   "outputs": [],
+    "source": [
+     "bike_set_clean['start_time'] = pd.to_datetime(bike_set_almost_clean['start_time'], format=\"%Y-%m-%d %H:%M:%S\")\n",
+     "bike_set_clean.info()\n",
+@@ -423,7 +322,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 15,
++   "execution_count": null,
+    "metadata": {
+     "collapsed": false,
+     "ExecuteTime": {
+Index: .idea/DSML_Team01.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/Yusuf_Playground/CSV\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"DSML_Team01\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module\" module-name=\"Data_Cleanup\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/DSML_Team01.iml b/.idea/DSML_Team01.iml
+--- a/.idea/DSML_Team01.iml	(revision bbc54816c07af4621578c7183af937c7089ca27b)
++++ b/.idea/DSML_Team01.iml	(date 1689160293532)
+@@ -6,6 +6,5 @@
+     </content>
+     <orderEntry type="jdk" jdkName="DSML_Team01" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="module" module-name="Data_Cleanup" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: Idle_Time/no.1 Idle Time Code.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n \"cells\": [\r\n  {\r\n   \"attachments\": {},\r\n   \"cell_type\": \"markdown\",\r\n   \"id\": \"c0485775\",\r\n   \"metadata\": {},\r\n   \"source\": [\r\n    \"-csv datei einlesen\\n\",\r\n    \"-Name ändern\\n\",\r\n    \"- 1sten 5 zeilen ausgeben\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 31,\r\n   \"id\": \"4ac59096\",\r\n   \"metadata\": {\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-06-03T22:22:01.451161Z\",\r\n     \"end_time\": \"2023-06-03T22:22:05.831096Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"import pandas as pd\\n\",\r\n    \"from datetime import datetime, timedelta\\n\",\r\n    \"csv_file = '../Data_Cleanup/outCSV/Clean_Metro_Set.csv'\\n\",\r\n    \"metro = pd.read_csv(csv_file, parse_dates= ['start_time','end_time'], low_memory=False, index_col= 0)\"\r\n   ]\r\n  },\r\n  {\r\n   \"attachments\": {},\r\n   \"cell_type\": \"markdown\",\r\n   \"id\": \"45891a32\",\r\n   \"metadata\": {},\r\n   \"source\": [\r\n    \"#### Sort Table by Transaction Time\\n\",\r\n    \"Now we are going\"\r\n   ]\r\n  },\r\n  {\r\n   \"attachments\": {},\r\n   \"cell_type\": \"markdown\",\r\n   \"id\": \"6de58174\",\r\n   \"metadata\": {},\r\n   \"source\": [\r\n    \"-Neue Spalte hinzufügen für Idle_Time\\n\",\r\n    \"-Alle neuen felder mit \\\"None\\\" initialisieren, da alle nicht belegte Idle Time Zellen keinen Einfluss später in der durchschnittlichen Idle Time Berechnung haben sollten.\\n\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 32,\r\n   \"id\": \"df1625c9\",\r\n   \"metadata\": {\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-06-03T22:22:05.837643Z\",\r\n     \"end_time\": \"2023-06-03T22:22:06.205530Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"metro['idle_time'] = None\\n\",\r\n    \"metro = metro.sort_values(by='end_time')\"\r\n   ]\r\n  },\r\n  {\r\n   \"attachments\": {},\r\n   \"cell_type\": \"markdown\",\r\n   \"id\": \"f200ac5d\",\r\n   \"metadata\": {},\r\n   \"source\": [\r\n    \"Idle Time berechnung\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"markdown\",\r\n   \"source\": [\r\n    \"Erklärung des folgenden Codes:\\n\",\r\n    \"\\n\",\r\n    \"Die Berechnung der Idle Time basiert auf der Überprüfung der Startzeit (current_start_time) im Vergleich zur Endzeit (stored end time) des vorherigen Vorgangs mit der gleichen Startstation (current_start_station_id).\\n\",\r\n    \"\\n\",\r\n    \"Der Algorithmus durchläuft die Datenzeilen des DataFrames und speichert die Endzeiten (current_end_time) für jede Endstation (current_end_station_id) in einem Dictionary namens BigDict.\\n\",\r\n    \"\\n\",\r\n    \"Für jede Zeile wird überprüft, ob die aktuelle Startzeit größer ist als die gespeicherte Endzeit für die Startstation. Wenn dies der Fall ist, bedeutet dies, dass zwischen den Vorgängen mit der gleichen Startstation eine Leerlaufzeit aufgetreten ist. Die Leerlaufzeit wird berechnet, indem die Startzeit von der gespeicherten Endzeit subtrahiert wird. Das Ergebnis wird dann in der Spalte \\\"idle_time\\\" der entsprechenden Zeile des DataFrames gespeichert.\\n\",\r\n    \"\\n\",\r\n    \"Um die Endzeit für eine Startstation abzurufen, wird das Dictionary BigDict verwendet. Wenn eine Startstation zum ersten Mal auftritt und keine gespeicherte Endzeit vorhanden ist, wird ein KeyError ausgelöst. In diesem Fall wird die aktuelle Endzeit für die aktuelle Endstation dem BigDict hinzugefügt.\\n\",\r\n    \"\\n\",\r\n    \"Durch dieses Verfahren wird für jede Zeile im DataFrame die Leerlaufzeit berechnet, sofern eine vorherige Operation mit derselben Startstation vorhanden ist. Dadurch können Informationen über Leerlaufzeiten zwischen aufeinanderfolgenden Vorgängen mit derselben Startstation erfasst und im DataFrame gespeichert werden.\"\r\n   ],\r\n   \"metadata\": {\r\n    \"collapsed\": false\r\n   }\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 33,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-06-03T22:22:06.206530Z\",\r\n     \"end_time\": \"2023-06-03T22:24:04.737783Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"BigDict = {\\n\",\r\n    \"    # station_id: {\\n\",\r\n    \"    #     transaction_id: end_time\\n\",\r\n    \"    # }\\n\",\r\n    \"}\\n\",\r\n    \"\\n\",\r\n    \"for i, row in metro.iterrows():\\n\",\r\n    \"    current_start_time = row[\\\"start_time\\\"]\\n\",\r\n    \"    current_end_time = row[\\\"end_time\\\"]\\n\",\r\n    \"    current_end_station_id = row[\\\"end_station_id\\\"]\\n\",\r\n    \"    current_start_station_id = row[\\\"start_station_id\\\"]\\n\",\r\n    \"    current_bike_id = row[\\\"bike_id\\\"]\\n\",\r\n    \"    current_transaction_id = i\\n\",\r\n    \"\\n\",\r\n    \"    if current_start_station_id in BigDict:\\n\",\r\n    \"        for transaction in list(BigDict[current_start_station_id]):  # Create a copy of the keys\\n\",\r\n    \"            if current_start_time < BigDict[current_start_station_id][transaction]:\\n\",\r\n    \"                continue\\n\",\r\n    \"            if metro.at[transaction, \\\"idle_time\\\"] is not None:\\n\",\r\n    \"                continue\\n\",\r\n    \"            idle_time = current_start_time - BigDict[current_start_station_id][transaction]\\n\",\r\n    \"            metro.at[transaction, \\\"idle_time\\\"] = idle_time\\n\",\r\n    \"            #if idle_time.total_seconds() >= 0:\\n\",\r\n    \"            del BigDict[current_start_station_id][transaction]\\n\",\r\n    \"\\n\",\r\n    \"    if current_end_station_id not in BigDict:\\n\",\r\n    \"        BigDict[current_end_station_id] = {current_transaction_id: current_end_time}\\n\",\r\n    \"\\n\",\r\n    \"    BigDict[current_end_station_id][current_transaction_id] = current_end_time\"\r\n   ]\r\n  },\r\n  {\r\n   \"cell_type\": \"code\",\r\n   \"execution_count\": 34,\r\n   \"metadata\": {\r\n    \"collapsed\": false,\r\n    \"ExecuteTime\": {\r\n     \"start_time\": \"2023-06-03T22:24:04.738693Z\",\r\n     \"end_time\": \"2023-06-03T22:24:19.408445Z\"\r\n    }\r\n   },\r\n   \"outputs\": [],\r\n   \"source\": [\r\n    \"metro.to_csv('../Data_Cleanup/outCSV/Metro_Set_with_IdleTime.csv')\"\r\n   ]\r\n  }\r\n ],\r\n \"metadata\": {\r\n  \"kernelspec\": {\r\n   \"display_name\": \"Python 3 (ipykernel)\",\r\n   \"language\": \"python\",\r\n   \"name\": \"python3\"\r\n  },\r\n  \"language_info\": {\r\n   \"codemirror_mode\": {\r\n    \"name\": \"ipython\",\r\n    \"version\": 3\r\n   },\r\n   \"file_extension\": \".py\",\r\n   \"mimetype\": \"text/x-python\",\r\n   \"name\": \"python\",\r\n   \"nbconvert_exporter\": \"python\",\r\n   \"pygments_lexer\": \"ipython3\",\r\n   \"version\": \"3.11.2\"\r\n  }\r\n },\r\n \"nbformat\": 4,\r\n \"nbformat_minor\": 5\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Idle_Time/no.1 Idle Time Code.ipynb b/Idle_Time/no.1 Idle Time Code.ipynb
+--- a/Idle_Time/no.1 Idle Time Code.ipynb	(revision bbc54816c07af4621578c7183af937c7089ca27b)
++++ b/Idle_Time/no.1 Idle Time Code.ipynb	(date 1689162047841)
+@@ -13,12 +13,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 31,
++   "execution_count": 1,
+    "id": "4ac59096",
+    "metadata": {
+     "ExecuteTime": {
+-     "start_time": "2023-06-03T22:22:01.451161Z",
+-     "end_time": "2023-06-03T22:22:05.831096Z"
++     "end_time": "2023-06-03T22:22:05.831096Z",
++     "start_time": "2023-06-03T22:22:01.451161Z"
+     }
+    },
+    "outputs": [],
+@@ -51,12 +51,12 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 32,
++   "execution_count": 2,
+    "id": "df1625c9",
+    "metadata": {
+     "ExecuteTime": {
+-     "start_time": "2023-06-03T22:22:05.837643Z",
+-     "end_time": "2023-06-03T22:22:06.205530Z"
++     "end_time": "2023-06-03T22:22:06.205530Z",
++     "start_time": "2023-06-03T22:22:05.837643Z"
+     }
+    },
+    "outputs": [],
+@@ -75,7 +75,12 @@
+    ]
+   },
+   {
++   "attachments": {},
+    "cell_type": "markdown",
++   "id": "456591d7",
++   "metadata": {
++    "collapsed": false
++   },
+    "source": [
+     "Erklärung des folgenden Codes:\n",
+     "\n",
+@@ -88,20 +93,18 @@
+     "Um die Endzeit für eine Startstation abzurufen, wird das Dictionary BigDict verwendet. Wenn eine Startstation zum ersten Mal auftritt und keine gespeicherte Endzeit vorhanden ist, wird ein KeyError ausgelöst. In diesem Fall wird die aktuelle Endzeit für die aktuelle Endstation dem BigDict hinzugefügt.\n",
+     "\n",
+     "Durch dieses Verfahren wird für jede Zeile im DataFrame die Leerlaufzeit berechnet, sofern eine vorherige Operation mit derselben Startstation vorhanden ist. Dadurch können Informationen über Leerlaufzeiten zwischen aufeinanderfolgenden Vorgängen mit derselben Startstation erfasst und im DataFrame gespeichert werden."
+-   ],
+-   "metadata": {
+-    "collapsed": false
+-   }
++   ]
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 33,
++   "execution_count": 3,
++   "id": "0a581c37",
+    "metadata": {
+-    "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-06-03T22:22:06.206530Z",
+-     "end_time": "2023-06-03T22:24:04.737783Z"
+-    }
++     "end_time": "2023-06-03T22:24:04.737783Z",
++     "start_time": "2023-06-03T22:22:06.206530Z"
++    },
++    "collapsed": false
+    },
+    "outputs": [],
+    "source": [
+@@ -138,13 +141,14 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 34,
++   "execution_count": 4,
++   "id": "51da988c",
+    "metadata": {
+-    "collapsed": false,
+     "ExecuteTime": {
+-     "start_time": "2023-06-03T22:24:04.738693Z",
+-     "end_time": "2023-06-03T22:24:19.408445Z"
+-    }
++     "end_time": "2023-06-03T22:24:19.408445Z",
++     "start_time": "2023-06-03T22:24:04.738693Z"
++    },
++    "collapsed": false
+    },
+    "outputs": [],
+    "source": [
