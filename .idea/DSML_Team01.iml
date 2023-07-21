@@ -6,6 +6,5 @@
     </content>
     <orderEntry type="jdk" jdkName="DSML_Team01" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Data_Cleanup" />
   </component>
 </module>
