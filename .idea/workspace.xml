@@ -4,22 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="Fixed merge">
-      <change afterPath="$PROJECT_DIR$/Predictive Model/Second_try.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Predictive Model/TrialError.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/DSML_Team01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DSML_Team01.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_07_2023_13_11_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_07_2023_13_11__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_07_2023_13_55_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_07_2023_13_55__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_20__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_07_2023_17_18__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_07_2023_17_18__Changes_.xml" afterDir="false" />
+    <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="YUSUF WRECKED THE PREDICTION MODEL">
+      <change afterPath="$PROJECT_DIR$/FinalNotebook/CSV/Weather_LosAngeles.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FinalNotebook/CSV/metro_2017_2022.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FinalNotebook/FinalEditionV1.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Predictive Model/Test.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Visualization/GPT.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Visualization/sorted.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Idle_Time/no.2 Idle DayAndDayTime Code.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Idle_Time/no.2 Idle DayAndDayTime Code.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Idle_Time/no.3 AvgIdleTime.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Idle_Time/no.3 AvgIdleTime.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Merging/Merging Datasets.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Merging/Merging Datasets.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Predictive Model/DecisionTreeModel.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Predictive Model/DecisionTreeModel.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Predictive Model/Second_try.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Predictive Model/Second_try.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visualization/IdleTime_Visualization.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/IdleTime_Visualization.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +155,7 @@
     <MESSAGE value="Hello" />
     <MESSAGE value="Playground" />
     <MESSAGE value="Fixed merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed merge" />
+    <MESSAGE value="YUSUF WRECKED THE PREDICTION MODEL" />
+    <option name="LAST_COMMIT_MESSAGE" value="YUSUF WRECKED THE PREDICTION MODEL" />
   </component>
 </project>
