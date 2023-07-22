@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4257c73-2161-4ced-89f1-3047f473585a" name="Changes" comment="YUSUF WRECKED THE PREDICTION MODEL">
-      <change afterPath="$PROJECT_DIR$/FinalNotebook/CSV/Weather_LosAngeles.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FinalNotebook/CSV/metro_2017_2022.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FinalNotebook/FinalEditionV1.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Predictive Model/Test.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Visualization/GPT.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Visualization/sorted.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="585ec971-2ac5-4bb7-9aca-e7d34ebb259f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Visualization/CleanVis.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_09__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_16_07_2023_15_20__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_07_2023_17_18__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_15_07_2023_17_18__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Data_Cleanup/Data_Cleanup.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Idle_Time/no.2 Idle DayAndDayTime Code.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Idle_Time/no.2 Idle DayAndDayTime Code.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Idle_Time/no.3 AvgIdleTime.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Idle_Time/no.3 AvgIdleTime.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Merging/Merging Datasets.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Merging/Merging Datasets.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Predictive Model/Second_try.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Predictive Model/Second_try.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Visualization/IdleTime_Visualization.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Visualization/IdleTime_Visualization.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +33,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -57,11 +50,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="Yusuf" />
-                    <option name="lastUsedInstant" value="1689527947" />
+                    <option name="lastUsedInstant" value="1690021811" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1689516078" />
+                    <option name="lastUsedInstant" value="1690021729" />
                   </RecentBranch>
                 </list>
               </option>
@@ -101,7 +94,7 @@
     &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Yusuf&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/Desktop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yusuf/DataspellProjects/DSML_Team01/Data_Cleanup&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
@@ -112,38 +105,11 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="HEAD" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="Yusuf" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -153,9 +119,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Hello" />
-    <MESSAGE value="Playground" />
-    <MESSAGE value="Fixed merge" />
-    <MESSAGE value="YUSUF WRECKED THE PREDICTION MODEL" />
-    <option name="LAST_COMMIT_MESSAGE" value="YUSUF WRECKED THE PREDICTION MODEL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hello" />
   </component>
 </project>
